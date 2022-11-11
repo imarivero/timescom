@@ -12,11 +12,11 @@ class AppTheme{
     // Elevated Button
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        primary: primary,
         shape:  RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18),
         ),
-        elevation: 0
+        elevation: 0,
+        minimumSize: const Size(240.0, 46.0)
       )
     ),
 
