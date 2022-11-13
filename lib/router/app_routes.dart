@@ -10,7 +10,7 @@ class AppRoutes {
     // ScreenDef(route: 'welcomeScreen', name: 'Pantalla bienvenida', screen: screen)
     // ScreenDef(route: 'loginScreen', name: 'Pantalla inicio de sesion', screen: screen)
     ScreenDef(route: 'regisAlumnoScreen', name: 'Pantalla registro de alumno', screen: const RegistroAlumnoScreen()),
-    ScreenDef(route: 'mainMatrizScreen', name: 'Pantalla vista matriz', screen: const MainMatrizScreen())
+    ScreenDef(route: 'mainMatrizScreen', name: 'Pantalla vista matriz', screen: const MainMatrizScreen()),
   ];
 
   static Map<String, Widget Function(BuildContext)> getAppRoutes(){
