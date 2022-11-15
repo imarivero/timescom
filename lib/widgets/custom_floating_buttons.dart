@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:timescom/theme/app_theme.dart';
 import 'package:timescom/widgets/floating_action_bubble.dart';
 // import 'package:floating_action_bubble/floating_action_bubble.dart';
@@ -25,7 +26,7 @@ class CustomFloatingButtons extends StatelessWidget {
           title:"Hábito",
           iconColor :Colors.white,
           bubbleColor : Colors.blue,
-          icon:Icons.settings,
+          icon: FontAwesomeIcons.arrowsSpin,
           titleStyle:TextStyle(fontSize: 16 , color: Colors.white),
           onPress: () {
             animationController.reverse();
@@ -36,7 +37,7 @@ class CustomFloatingButtons extends StatelessWidget {
           title:"Actividad",
           iconColor :Colors.white,
           bubbleColor : Colors.blue,
-          icon:Icons.people,
+          icon: FontAwesomeIcons.bullseye,
           titleStyle:TextStyle(fontSize: 16 , color: Colors.white),
           onPress: () {
             animationController.reverse();

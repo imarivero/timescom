@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:timescom/widgets/card_row.dart';
-import 'package:timescom/widgets/card_table.dart';
-import 'package:timescom/widgets/custom_floating_buttons.dart';
-import 'package:timescom/widgets/custom_navbar.dart';
+import 'package:timescom/widgets/widgets.dart';
+
 
 class MainMatrizScreen extends StatefulWidget {
    
@@ -17,12 +15,14 @@ class _MainMatrizScreenState extends State<MainMatrizScreen> with SingleTickerPr
 
   late final AnimationController _animationController = AnimationController(
     vsync: this,
-    duration: Duration(milliseconds: 260),
+    duration: const Duration(milliseconds: 260),
   );
 
   late final curvedAnimation = CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
   
   late final Animation<double> _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   
   @override
   void initState(){
@@ -31,17 +31,14 @@ class _MainMatrizScreenState extends State<MainMatrizScreen> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
+      drawer: const  Drawer(child: CustomDrawer(),),
       body: SafeArea(
         child: Column(
           children: [
+            
             // Menu control y texto
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Icon(Icons.menu, color: Colors.white, size: 30,),
-                Text('Inicio', style: GoogleFonts.inter(fontSize: 15,),)
-              ],
-            ),
+            _MenuDrawerText(scaffoldKey: scaffoldKey),
           
             // Saludo y nombre de alumno
             const SizedBox(height: 20,),
@@ -58,6 +55,34 @@ class _MainMatrizScreenState extends State<MainMatrizScreen> with SingleTickerPr
       floatingActionButton: CustomFloatingButtons(animation: _animation, animationController: _animationController,),
       bottomNavigationBar: const CustomNavBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+}
+
+class _MenuDrawerText extends StatelessWidget {
+  const _MenuDrawerText({
+    Key? key,
+    required this.scaffoldKey,
+  }) : super(key: key);
+
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            child: const Icon(Icons.menu, color: Colors.white, size: 30,),
+            onTap: () {
+              scaffoldKey.currentState!.openDrawer();
+            },
+          ),
+          Text('Inicio', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold),)
+        ],
+      ),
     );
   }
 }
