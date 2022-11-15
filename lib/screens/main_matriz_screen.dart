@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timescom/widgets/widgets.dart';
 
-
 class MainMatrizScreen extends StatefulWidget {
    
   const MainMatrizScreen({Key? key}) : super(key: key);
@@ -11,7 +10,7 @@ class MainMatrizScreen extends StatefulWidget {
   State<MainMatrizScreen> createState() => _MainMatrizScreenState();
 }
 
-class _MainMatrizScreenState extends State<MainMatrizScreen> with SingleTickerProviderStateMixin{
+class _MainMatrizScreenState extends State<MainMatrizScreen> with TickerProviderStateMixin{
 
   late final AnimationController _animationController = AnimationController(
     vsync: this,
@@ -28,6 +27,7 @@ class _MainMatrizScreenState extends State<MainMatrizScreen> with SingleTickerPr
   void initState(){
     super.initState();
   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
