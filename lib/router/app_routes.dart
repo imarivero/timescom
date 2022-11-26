@@ -4,7 +4,7 @@ import 'package:timescom/screens/screens.dart';
 
 class AppRoutes {
   // Si quieren ver su pantalla al compilar cambien este
-  static const initialRoute = 'mainMatrizScreen';
+  static const initialRoute = 'pomodoroPage';
 
   static final listScreens = <ScreenDef>[
     // ScreenDef(route: 'welcomeScreen', name: 'Pantalla bienvenida', screen: screen)
@@ -12,6 +12,7 @@ class AppRoutes {
     ScreenDef(route: 'regisAlumnoScreen', name: 'Pantalla registro de alumno', screen: const RegistroAlumnoScreen()),
     ScreenDef(route: 'mainMatrizScreen', name: 'Pantalla vista matriz', screen: const MainMatrizScreen()),
     ScreenDef(route: 'detalleCategoria', name: 'Pantalla vista de categoria', screen: const DetalleCategoriaScreen()),
+    ScreenDef(route: 'pomodoroPage', name: 'Pantalla vista de pomodoro', screen: PomodoroPage()),
   ];
 
   static Map<String, Widget Function(BuildContext)> getAppRoutes(){

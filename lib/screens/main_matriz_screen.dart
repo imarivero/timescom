@@ -32,7 +32,7 @@ class _MainMatrizScreenState extends State<MainMatrizScreen> with TickerProvider
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      drawer: const  Drawer(child: CustomDrawer(),),
+      drawer: const Drawer(child: CustomDrawer(),),
       body: SafeArea(
         child: Column(
           children: [

@@ -3,8 +3,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'ScreenSize_reduces.dart';
 import 'package:intl/intl.dart';
+import 'package:timescom/theme/app_theme.dart';
 //import 'package:flutter/rendering.dart';
 
 class PomodoroPage extends StatefulWidget {
@@ -25,13 +25,15 @@ class _PomodoroPageState extends State<PomodoroPage> {
   int _start = 2;
   int _startSegundos = 59;
   */
-
+  int count_descansos = 0;
+  int count_pomodoro = 0;
   int seconds = 00;
   int minutes = 25;
   Timer? timer;
   int minutos_transcurridos = 00;
   var f = NumberFormat("00");
   double progreso = 0;
+  int minutesBreak = 05;
 
   @override
   Widget build(BuildContext context) {
@@ -100,10 +102,9 @@ class _PomodoroPageState extends State<PomodoroPage> {
                       ),
                       FloatingActionButton(
                         onPressed: (() {
-                          setState(() {
-                            _iniciarPomodoro();
-                            //print("Botón de play");
-                          });
+                          _iniciarPomodoro();
+                          //minutes = minutesBreak;
+                          //print("Botón de play");
                         }),
                         child: Icon(
                           Icons.play_arrow,
@@ -167,57 +168,51 @@ class _PomodoroPageState extends State<PomodoroPage> {
           } else {
             progreso = 0;
             timer.cancel();
+            count_pomodoro++;
+            minutos_transcurridos = 0;
+            minutes = minutesBreak;
+            print("Comienzo del descanso");
+            print(minutes);
+            _descansoPomodoro();
             print("Timer Complete");
           }
-
-/*
-          if (minutes % 2 == 0) {
-            if (progreso < 1) {
-              progreso = minutes / 25;
-            } else {
-              progreso = 1;
-              print("Timer al 100%");
-            }
-          }*/
         }
       });
     });
-    /*
-    timer = Timer.periodic(Duration(seconds: 120), (timer) {
-      this.segundos--;
-      setState(() {});
-    });
-    */
-    /*
-    const oneSec = const Duration(seconds: 1);
-    tiempo = Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        if (_start == 0) {
-          setState(() {
-            timer.cancel();
-            _start = 25;
-          });
+  }
+
+  void _descansoPomodoro() {
+    if (timer != null) {
+      _detenerPomodoro();
+    }
+    if (minutesBreak > 0) {
+      seconds = minutesBreak * 60;
+    }
+    if (seconds > 60) {
+      minutesBreak = (seconds / 60).floor();
+      seconds -= (minutesBreak * 60);
+    }
+    int time_auxi = minutesBreak * 60;
+    double auxi_progreso = (time_auxi / 100);
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (seconds > 0) {
+          seconds--;
         } else {
-          setState(() {
-            _startSegundos--;
-            if (_startSegundos == 0) {
-              _start--;
-              _startSegundos = 59;
-            }
-            //_start--;
-          });
+          if (minutesBreak > 0) {
+            seconds = 59;
+            minutesBreak--;
+            minutos_transcurridos = 5 - minutesBreak;
+            progreso = minutos_transcurridos / 5;
+          } else {
+            progreso = 0;
+            timer.cancel();
+            count_descansos++;
+            minutes = 25;
+            print("Timer Complete");
+          }
         }
-      },
-    );
-    */
+      });
+    });
   }
-  /*
-  String formatearTiempo() {
-    Duration duracion = Duration(seconds: this.segundos);
-    int segundos = duracion.inSeconds;
-    int minutos =25;
-    return "$minutos:$segundos";
-  }
-  */
 }
