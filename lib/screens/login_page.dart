@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                         shape: StadiumBorder(),
                       ),
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        Navigator.pushNamed(context, 'mainMatrizScreen');
                       }))
             ],
           );

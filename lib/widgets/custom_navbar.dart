@@ -29,7 +29,7 @@ class CustomNavBar extends StatelessWidget {
 
         // foo item para mantener la separacion en la barra
         BottomNavigationBarItem(
-          icon: Icon(Icons.space_bar, color: Colors.white,),
+          icon: Icon(Icons.space_bar, color: Colors.black,),
           label: '',
         ),
         
@@ -39,7 +39,21 @@ class CustomNavBar extends StatelessWidget {
         )
       ],
       onTap: (value) {
-        print(value);
+        // print(value);
+        switch (value) {
+          case 0:
+            Navigator.pushNamed(context, 'mainMatrizScreen');
+            break;
+          case 1:
+            Navigator.pushNamed(context, 'regisAlumnoScreen');
+            break;
+          case 2:
+            Navigator.pushNamed(context, 'pomodoroPage');
+            break;
+          default:
+            print('error');
+            break;
+        }
       },
     );
   }

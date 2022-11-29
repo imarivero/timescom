@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:intl/intl.dart';
 import 'package:timescom/theme/app_theme.dart';
+import 'package:timescom/widgets/custom_navbar.dart';
 //import 'package:flutter/rendering.dart';
 
 class PomodoroPage extends StatefulWidget {
@@ -39,98 +40,93 @@ class _PomodoroPageState extends State<PomodoroPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          //height: auxi_alto,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [
-            Color.fromARGB(255, 85, 117, 207),
-            Color.fromARGB(255, 97, 172, 247)
-          ], begin: FractionalOffset(0.5, 1))),
-          width: double.infinity,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 10.0),
-                  child: Text(
-                    "",
-                    style: TextStyle(color: Colors.white, fontSize: 50.0),
-                  ),
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Text(
+                  "",
+                  style: TextStyle(color: Colors.white, fontSize: 50.0),
                 ),
-                Expanded(
-                    child: CircularPercentIndicator(
-                  percent: progreso,
-                  animation: true,
-                  animateFromLastPercent: true,
-                  radius: 140.0,
-                  lineWidth: 20.0,
-                  progressColor: Colors.green,
-                  center: Text("${f.format(minutes)} : ${f.format(seconds)}",
-                      style: TextStyle(color: Colors.white, fontSize: 60.0)),
-                )),
-                SizedBox(
-                  height: 30.0,
+              ),
+              Expanded(
+                  child: CircularPercentIndicator(
+                percent: progreso,
+                animation: true,
+                animateFromLastPercent: true,
+                radius: 140.0,
+                lineWidth: 20.0,
+                progressColor: AppTheme.primary,
+                center: Text("${f.format(minutes)} : ${f.format(seconds)}",
+                    style: TextStyle(color: Colors.white, fontSize: 60.0)),
+              )),
+              SizedBox(
+                height: 30.0,
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    /*
+                    FloatingActionButton(
+                      onPressed: (() {
+                        print("Boton de pausa");
+                      }),
+                      child: Icon(
+                        Icons.pause,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: Colors.grey,
+                    ), */
+                    FloatingActionButton(
+                      onPressed: (() {
+                        setState(() {
+                          _detenerPomodoro();
+                          print("Botón de stop");
+                        });
+                      }),
+                      child: Icon(
+                        Icons.stop,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: Colors.grey,
+                      heroTag: 'btnStop',
+                    ),
+                    FloatingActionButton(
+                      onPressed: (() {
+                        _iniciarPomodoro();
+                        //minutes = minutesBreak;
+                        //print("Botón de play");
+                      }),
+                      child: Icon(
+                        Icons.play_arrow,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: Colors.grey,
+                      heroTag: 'btnPlay',
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      /*
-                      FloatingActionButton(
-                        onPressed: (() {
-                          print("Boton de pausa");
-                        }),
-                        child: Icon(
-                          Icons.pause,
-                          color: Colors.white,
-                        ),
-                        backgroundColor: Colors.grey,
-                      ), */
-                      FloatingActionButton(
-                        onPressed: (() {
-                          setState(() {
-                            _detenerPomodoro();
-                            print("Botón de stop");
-                          });
-                        }),
-                        child: Icon(
-                          Icons.stop,
-                          color: Colors.white,
-                        ),
-                        backgroundColor: Colors.grey,
-                      ),
-                      FloatingActionButton(
-                        onPressed: (() {
-                          _iniciarPomodoro();
-                          //minutes = minutesBreak;
-                          //print("Botón de play");
-                        }),
-                        child: Icon(
-                          Icons.play_arrow,
-                          color: Colors.white,
-                        ),
-                        backgroundColor: Colors.grey,
-                      ),
-                    ],
-                  ),
-                )
-                /*
-                Expanded(
-                    child: FloatingActionButton(
-                  onPressed: () {
-                    print("Funcionalidad");
-                  },
-                  child: Icon(
-                    Icons.play_arrow,
-                    color: Colors.white,
-                  ),
-                  backgroundColor: Colors.grey,
-                )
-                ),*/
-              ]),
-        ),
+              )
+              /*
+              Expanded(
+                  child: FloatingActionButton(
+                onPressed: () {
+                  print("Funcionalidad");
+                },
+                child: Icon(
+                  Icons.play_arrow,
+                  color: Colors.white,
+                ),
+                backgroundColor: Colors.grey,
+              )
+              ),*/
+            ]),
+        bottomNavigationBar: const CustomNavBar(),
       ),
+      
     );
   }
 
