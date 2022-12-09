@@ -1,5 +1,7 @@
 // Archivo barrel de exportacion de archivos en /screen
 
+export 'package:timescom/screens/creacion_actividad.dart';
+export 'package:timescom/screens/creacion_habito.dart';
 export 'package:timescom/screens/bienvenido.dart';
 export 'package:timescom/screens/detalle_actividad.dart';
 export 'package:timescom/screens/detalle_categoria.dart';

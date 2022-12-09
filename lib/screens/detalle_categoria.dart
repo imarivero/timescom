@@ -7,7 +7,7 @@ import 'package:timescom/theme/app_theme.dart';
 import 'package:timescom/widgets/widgets.dart';
 
 class DetalleCategoriaScreen extends StatefulWidget{
-   
+  
   const DetalleCategoriaScreen({Key? key}) : super(key: key);
 
   @override

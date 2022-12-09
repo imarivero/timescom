@@ -27,9 +27,10 @@ class CustomFloatingButtons extends StatelessWidget {
           iconColor :Colors.white,
           bubbleColor : Colors.blue,
           icon: FontAwesomeIcons.arrowsSpin,
-          titleStyle:TextStyle(fontSize: 16 , color: Colors.white),
+          titleStyle: const TextStyle(fontSize: 16 , color: Colors.white),
           onPress: () {
             animationController.reverse();
+            Navigator.pushNamed(context, 'creacionHabito');
           },
         ),
         // Floating action menu item
@@ -38,9 +39,10 @@ class CustomFloatingButtons extends StatelessWidget {
           iconColor :Colors.white,
           bubbleColor : Colors.blue,
           icon: FontAwesomeIcons.bullseye,
-          titleStyle:TextStyle(fontSize: 16 , color: Colors.white),
+          titleStyle: const TextStyle(fontSize: 16 , color: Colors.white),
           onPress: () {
             animationController.reverse();
+            Navigator.pushNamed(context, 'creacionActividad');
           },
         ),
         
