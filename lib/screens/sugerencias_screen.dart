@@ -7,6 +7,8 @@ import 'package:timescom/widgets/sugerencia_card.dart';
 import 'package:flutter/material.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
+import '../theme/colors.dart';
+
 //!ESTA ES LA PANTALLA DONDE APARECEN TODOS LOS HABITOS SUGERIDOSS
 class SugerenciasScreen extends StatelessWidget {
   const SugerenciasScreen({super.key});
@@ -19,11 +21,11 @@ class SugerenciasScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color.fromARGB(170, 115, 128, 180),
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          "Sugerencias",
-          style: TextStyle(color: Colors.black),
-        ),
+        leading: IconButton(
+            onPressed: () => Navigator.of(context).pop(),
+            icon: Icon(Icons.arrow_back_ios_new)),
+        title: Text("Sugerencias"),
+        flexibleSpace: ColorAppbar(),
       ),
       body: ListView.builder(
         itemCount: habitossugerencia.habitossugeridos.length,

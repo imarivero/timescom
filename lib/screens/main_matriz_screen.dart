@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timescom/screens/desempe%C3%B1o.dart';
 import 'package:timescom/widgets/widgets.dart';
 
 class MainMatrizScreen extends StatefulWidget {
@@ -37,25 +38,37 @@ class _MainMatrizScreenState extends State<MainMatrizScreen>
         child: CustomDrawer(),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            // Menu control y texto
-            _MenuDrawerText(scaffoldKey: scaffoldKey),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Menu control y texto
+              _MenuDrawerText(scaffoldKey: scaffoldKey),
 
-            // Saludo y nombre de alumno
-            const SizedBox(
-              height: 20,
-            ),
-            Text('Hola, \n <<Nombre del alumno>>',
+              // Saludo y nombre de alumno
+              const SizedBox(
+                height: 20,
+              ),
+              Text('Hola, \n <<Nombre del alumno>>',
+                  style: GoogleFonts.inter(
+                      fontSize: 35, fontWeight: FontWeight.bold)),
+
+              // Tarjetas actividades y habitos
+              const CardRow(),
+
+              // Texto y matriz
+              const CardTable(),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Activiades Agendadas para el dia de hoy',
                 style: GoogleFonts.inter(
-                    fontSize: 35, fontWeight: FontWeight.bold)),
+                    fontSize: 20, fontWeight: FontWeight.bold),
+              ),
 
-            // Tarjetas actividades y habitos
-            const CardRow(),
-
-            // Texto y matriz
-            const CardTable(),
-          ],
+              DesempeScreen()
+            ],
+          ),
         ),
       ),
       floatingActionButton: CustomFloatingButtons(

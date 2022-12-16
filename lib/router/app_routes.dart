@@ -3,6 +3,9 @@ import 'package:timescom/models/screen_def.dart';
 import 'package:timescom/screens/ModificarActividad.dart';
 import 'package:timescom/screens/ModificarHabito.dart';
 import 'package:timescom/screens/check_auth_screen.dart';
+import 'package:timescom/screens/desempe%C3%B1o.dart';
+import 'package:timescom/screens/desempenio3.dart';
+import 'package:timescom/screens/desempenio_screen.dart';
 import 'package:timescom/screens/modificarPerfil_page.dart';
 import 'package:timescom/screens/perfil.dart';
 import 'package:timescom/screens/registroActividad.dart';
@@ -11,6 +14,8 @@ import 'package:timescom/screens/screens.dart';
 import 'package:timescom/screens/slideshowpage.dart';
 import 'package:timescom/screens/sugerencias_descripcion_screen.dart';
 import 'package:timescom/screens/sugerencias_screen.dart';
+
+import '../screens/desempenio2.dart';
 
 class AppRoutes {
   // Si quieren ver su pantalla al compilar cambien este
@@ -89,6 +94,26 @@ class AppRoutes {
       route: 'descripcionsugerencia',
       name: 'descripcionsugerencia',
       screen: SugerenciasDescripcionScreen(),
+    ),
+    ScreenDef(
+      route: 'desempeno',
+      name: 'desempeno',
+      screen: DesempeScreen(),
+    ),
+    ScreenDef(
+      route: 'desempeno2',
+      name: 'desempeno2',
+      screen: DesempeScreen2(),
+    ),
+    ScreenDef(
+      route: 'desempeno3',
+      name: 'desempeno3',
+      screen: desempenio3Screen(),
+    ),
+    ScreenDef(
+      route: 'desempenio',
+      name: 'desempenio',
+      screen: DesempenioScreen(),
     ),
   ];
 

@@ -101,7 +101,9 @@ class _DrawerMenuItems extends StatelessWidget {
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 )),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, 'desempenio');
+            },
           ),
           ListTile(
             leading: const Icon(Icons.lock),
