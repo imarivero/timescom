@@ -9,12 +9,17 @@ class CustomNavBar extends StatelessWidget {
     return BottomNavigationBar(
       selectedItemColor: Colors.white,
       backgroundColor: Colors.black,
-      unselectedLabelStyle: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
-      selectedLabelStyle: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+      unselectedLabelStyle: GoogleFonts.inter(
+          fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+      selectedLabelStyle: GoogleFonts.inter(
+          fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
       landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.house, color: Colors.white,),
+          icon: Icon(
+            Icons.house,
+            color: Colors.white,
+          ),
           label: 'Inicio',
         ),
 
@@ -29,12 +34,18 @@ class CustomNavBar extends StatelessWidget {
 
         // foo item para mantener la separacion en la barra
         BottomNavigationBarItem(
-          icon: Icon(Icons.space_bar, color: Colors.black,),
+          icon: Icon(
+            Icons.space_bar,
+            color: Colors.black,
+          ),
           label: '',
         ),
-        
+
         BottomNavigationBarItem(
-          icon: Icon(Icons.timer, color: Colors.white,),
+          icon: Icon(
+            Icons.timer,
+            color: Colors.white,
+          ),
           label: 'Pomodoro',
         )
       ],
@@ -58,4 +69,3 @@ class CustomNavBar extends StatelessWidget {
     );
   }
 }
-

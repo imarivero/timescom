@@ -5,45 +5,42 @@ import 'package:timescom/widgets/floating_action_bubble.dart';
 // import 'package:floating_action_bubble/floating_action_bubble.dart';
 
 class CustomFloatingButtons extends StatelessWidget {
-
   final AnimationController animationController;
   final Animation animation;
 
-  const CustomFloatingButtons({
-    super.key, 
-    required this.animationController, 
-    required this.animation
-  });
+  const CustomFloatingButtons(
+      {super.key, required this.animationController, required this.animation});
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionBubble(
       // Menu items
       items: <Bubble>[
-
         // Floating action menu item
         Bubble(
-          title:"Hábito",
-          iconColor :Colors.white,
-          bubbleColor : Colors.blue,
+          title: "Hábito",
+          iconColor: Colors.white,
+          bubbleColor: Colors.blue,
           icon: FontAwesomeIcons.arrowsSpin,
-          titleStyle:TextStyle(fontSize: 16 , color: Colors.white),
+          titleStyle: TextStyle(fontSize: 16, color: Colors.white),
           onPress: () {
             animationController.reverse();
+            Navigator.pushNamed(context, 'registrarhabito');
           },
         ),
         // Floating action menu item
         Bubble(
-          title:"Actividad",
-          iconColor :Colors.white,
-          bubbleColor : Colors.blue,
+          title: "Actividad",
+          iconColor: Colors.white,
+          bubbleColor: Colors.blue,
           icon: FontAwesomeIcons.bullseye,
-          titleStyle:TextStyle(fontSize: 16 , color: Colors.white),
+          titleStyle: TextStyle(fontSize: 16, color: Colors.white),
           onPress: () {
             animationController.reverse();
+            Navigator.pushNamed(context, 'registraractividad');
           },
         ),
-        
+
         // Bubble(
         //   title:"Actividad",
         //   iconColor :Colors.white,
@@ -54,8 +51,6 @@ class CustomFloatingButtons extends StatelessWidget {
         //     animationController.reverse();
         //   },
         // ),
-        
-
       ],
 
       // animation controller
@@ -63,14 +58,14 @@ class CustomFloatingButtons extends StatelessWidget {
 
       // On pressed change animation state
       onPress: () => animationController.isCompleted
-            ? animationController.reverse()
-            : animationController.forward(),
-      
+          ? animationController.reverse()
+          : animationController.forward(),
+
       // Floating Action button Icon color
       iconColor: Colors.white,
 
-      // Flaoting Action button Icon 
-      iconData: Icons.add, 
+      // Flaoting Action button Icon
+      iconData: Icons.add,
       backGroundColor: AppTheme.primary,
     );
   }

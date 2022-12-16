@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:timescom/providers/register_form_provider.dart';
+import 'package:timescom/services/auth_service.dart';
+import 'package:timescom/services/notificacions_services.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -8,10 +12,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String _email = '';
-  String _password = '';
+  // String _email = '';
+  // String _password = '';
   @override
   Widget build(BuildContext context) {
+    final registroForm = Provider.of<RegisterFormProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(''),
@@ -26,9 +31,9 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
             ),
             Divider(),
-            _crearEmail(),
+            _crearEmail(context),
             Divider(),
-            _crearPassword(),
+            _crearPassword(context),
             Divider(),
             Center(
               child: ElevatedButton(
@@ -41,8 +46,23 @@ class _LoginPageState extends State<LoginPage> {
                       fontStyle: FontStyle.normal),
                   shape: StadiumBorder(),
                 ),
-                onPressed: () {
-                  _mostrarAlert();
+                onPressed: () async {
+                  // _mostrarAlert();
+                  final authservice =
+                      Provider.of<AuthService>(context, listen: false);
+
+                  final String? errorMessage = await authservice.LoginUsuario(
+                      registroForm.email, registroForm.password);
+                  print("$registroForm.email, $registroForm.password");
+                  if (errorMessage == null) {
+                    Navigator.pushReplacementNamed(context, 'mainMatrizScreen');
+                    print("$registroForm.email, $registroForm.password");
+                  } else {
+                    print(errorMessage);
+                    NotificationService.showSnackBar(errorMessage);
+                  }
+
+                  FocusScope.of(context).requestFocus(FocusNode());
                 },
               ),
             )
@@ -52,7 +72,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _crearEmail() {
+  Widget _crearEmail(BuildContext context) {
+    final registroForm = Provider.of<RegisterFormProvider>(context);
     return TextField(
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
@@ -61,13 +82,12 @@ class _LoginPageState extends State<LoginPage> {
           labelText: 'Correo electrónico',
           suffixIcon: Icon(Icons.alternate_email),
           icon: Icon(Icons.email)),
-      onChanged: (String valor) async {
-        //if()
-      },
+      onChanged: (value) => registroForm.email = value,
     );
   }
 
-  Widget _crearPassword() {
+  Widget _crearPassword(BuildContext context) {
+    final registroForm = Provider.of<RegisterFormProvider>(context);
     return TextField(
         obscureText: true,
         decoration: InputDecoration(
@@ -77,9 +97,7 @@ class _LoginPageState extends State<LoginPage> {
             labelText: 'Contraseña',
             suffixIcon: Icon(Icons.lock_open),
             icon: Icon(Icons.lock)),
-        onChanged: (valor) => setState(() {
-              _password = valor;
-            }));
+        onChanged: (value) => registroForm.password = value);
   }
 
   void _mostrarAlert() {

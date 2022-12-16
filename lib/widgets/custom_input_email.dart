@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timescom/providers/register_form_provider.dart';
+import 'package:timescom/screens/registro_alumno.dart';
 
-class CustomInputTextField extends StatelessWidget {
+class CustomInputTextFieldemail extends StatelessWidget {
   final String? hintText;
   final String? labelText;
   final String? helperText;
@@ -13,7 +14,7 @@ class CustomInputTextField extends StatelessWidget {
   final String formProperty;
   final Map<String, String> formValues;
 
-  const CustomInputTextField({
+  const CustomInputTextFieldemail({
     Key? key,
     this.hintText,
     this.labelText,
@@ -87,11 +88,15 @@ class TextFormFieldMod extends StatelessWidget {
       autofocus: false,
       textCapitalization: TextCapitalization.words,
       keyboardType: keyboardType,
-      onChanged: (value) => registroForm.password = value,
+      onChanged: (value) => registroForm.email = value,
       validator: (value) {
-        return (value != null && value.length >= 6)
+        String pattern =
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+        RegExp regExp = new RegExp(pattern);
+
+        return regExp.hasMatch(value ?? '')
             ? null
-            : 'El tamao minimo  debe de ser de 6 caracteres';
+            : 'El valor ingresado no luce como un correo';
       },
       obscureText: obscureText == null ? false : true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
