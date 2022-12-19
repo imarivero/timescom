@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:timescom/screens/desempe%C3%B1o.dart';
+import 'package:timescom/screens/desempeno.dart';
 import 'package:timescom/widgets/widgets.dart';
 
 class MainMatrizScreen extends StatefulWidget {
@@ -57,16 +57,16 @@ class _MainMatrizScreenState extends State<MainMatrizScreen>
 
               // Texto y matriz
               const CardTable(),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
-                'Activiades Agendadas para el dia de hoy',
-                style: GoogleFonts.inter(
-                    fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+              // Text(
+              //   'Activiades Agendadas para el dia de hoy',
+              //   style: GoogleFonts.inter(
+              //       fontSize: 20, fontWeight: FontWeight.bold),
+              // ),
 
-              DesempeScreen()
+              // const DesempeScreen()
             ],
           ),
         ),

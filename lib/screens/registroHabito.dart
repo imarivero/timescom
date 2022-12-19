@@ -76,7 +76,7 @@ class RegistroHabito extends StatelessWidget {
                     ),
                     FittedBox(
                       child: Row(
-                        children: [
+                        children: const [
                           dias(inicialDia: "Lu"),
                           dias(inicialDia: "Ma"),
                           dias(inicialDia: "Mie"),
@@ -146,47 +146,47 @@ class _diasState extends State<dias> {
   }
 }
 
-class seleccion extends StatelessWidget {
-  final String tipo;
-  const seleccion({
-    Key? key,
-    required this.tipo,
-  }) : super(key: key);
+// class seleccion extends StatelessWidget {
+//   final String tipo;
+//   const seleccion({
+//     Key? key,
+//     required this.tipo,
+//   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-      child: Row(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255),
-                border: Border.all(
-                  color: Colors.black,
-                ),
-                borderRadius: BorderRadius.circular(15)),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text(
-                    tipo,
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  Icon(
-                    Icons.arrow_drop_down_outlined,
-                    color: Colors.black,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+//       child: Row(
+//         children: [
+//           Container(
+//             decoration: BoxDecoration(
+//                 color: Color.fromARGB(255, 255, 255, 255),
+//                 border: Border.all(
+//                   color: Colors.black,
+//                 ),
+//                 borderRadius: BorderRadius.circular(15)),
+//             child: Padding(
+//               padding: const EdgeInsets.all(8.0),
+//               child: Row(
+//                 children: [
+//                   Text(
+//                     tipo,
+//                     style: TextStyle(color: Colors.black),
+//                   ),
+//                   Icon(
+//                     Icons.arrow_drop_down_outlined,
+//                     color: Colors.black,
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 // MaterialStateProperty<Color> cambiarColor(Color color, Color colorPressed) {
 //   final cambiarColor = (Set states) {

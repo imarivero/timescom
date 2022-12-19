@@ -12,44 +12,48 @@ class WelcomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Center(
-                child: Text('Bienvenid@',
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Center(
+                  child: Text('Bienvenid@',
+                      style: GoogleFonts.inter(
+                        color: Colors.black,
+                        fontSize: 38,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ),
+          
+                SizedBox(
+                  height: 300,
+                  child: SvgPicture.asset('assets/svgs/slide-1.svg'),
+                ),
+                
+                Center(
+                  child: Text(
+                    'Gracias por descargar esta aplicación esperamos que te sea de mucha utilidad!',
                     style: GoogleFonts.inter(
                       color: Colors.black,
-                      fontSize: 38,
-                      fontWeight: FontWeight.bold,
-                    )),
-              ),
-              Container(
-                height: 300,
-                child: SvgPicture.asset('assets/svgs/slide-1.svg'),
-              ),
-              Center(
-                child: Text(
-                  'Gracias por descargar esta aplicación esperamos que te sea de mucha utilidad!',
-                  style: GoogleFonts.inter(
-                    color: Colors.black,
-                    fontSize: 25,
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'seleccionRegIniScreen');
-                },
-                child: const Text(
-                  'Aceptar',
-                  style: TextStyle(fontSize: 20),
+                const SizedBox(
+                  height: 40,
                 ),
-              )
-            ],
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'seleccionRegIniScreen');
+                  },
+                  child: const Text(
+                    'Aceptar',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

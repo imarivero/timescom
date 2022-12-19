@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:timescom/models/habito.dart';
-
 class HabitoSugerencia {
   HabitoSugerencia(
       {required this.descripcion,
@@ -40,9 +38,9 @@ class HabitoSugerencia {
       };
 
   HabitoSugerencia copy() => HabitoSugerencia(
-      titulo: this.titulo,
-      descripcion: this.descripcion,
-      imagenurl: this.imagenurl,
-      id: this.id,
-      videourl: this.videourl);
+      titulo: titulo,
+      descripcion: descripcion,
+      imagenurl: imagenurl,
+      id: id,
+      videourl: videourl);
 }

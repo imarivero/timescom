@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class prioridad extends StatefulWidget {
+class SeleccionPrioridad extends StatefulWidget {
   final String formProperty;
   final Map<String, String> formValues;
-  const prioridad(
+  const SeleccionPrioridad(
       {super.key, required this.formProperty, required this.formValues});
 
   @override
-  State<prioridad> createState() => _prioridadState();
+  State<SeleccionPrioridad> createState() => _SeleccionPrioridadState();
 }
 
-class _prioridadState extends State<prioridad> {
+class _SeleccionPrioridadState extends State<SeleccionPrioridad> {
   final meses = [
     'Importante',
     'Importante + Urgente',

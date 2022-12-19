@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:timescom/widgets/slideshow.dart';
 import 'package:timescom/screens/bienvenido.dart';
@@ -10,7 +8,7 @@ class SlideShowPage1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SlideShow(
           bulletPrimario: 20,
@@ -50,23 +48,25 @@ class _slide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Center(
-          child: Text(
-            Texto,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 40,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Center(
+            child: Text(
+              Texto,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 35,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
-        ),
-        Container(
-          height: 500,
-          child: SvgPicture.asset(svg),
-        ),
-      ],
+          Container(
+            height: 500,
+            child: SvgPicture.asset(svg),
+          ),
+        ],
+      ),
     );
   }
 }

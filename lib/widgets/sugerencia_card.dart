@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timescom/models/habitosSugerencias.dart';
+import 'package:timescom/models/habito_sugerencia.dart';
 
 class SugerenciaCard extends StatelessWidget {
   const SugerenciaCard({super.key, required this.habito});

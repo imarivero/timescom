@@ -1,4 +1,4 @@
-import 'package:timescom/widgets/Cuadrantes.dart';
+import 'package:timescom/widgets/cuadrantes.dart';
 import 'package:timescom/widgets/calendario.dart';
 import 'package:timescom/widgets/drop_meses.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,6 @@ class RegistroActividad extends StatelessWidget {
       'cuadrante': 'Importante',
       'fecha': 'fecha',
     };
-    final DateTime fehcaactividad;
 
     return Scaffold(
         body: SafeArea(
@@ -73,7 +72,7 @@ class RegistroActividad extends StatelessWidget {
                     Text(
                       "Cuadrante(Opcional)",
                     ),
-                    prioridad(
+                    SeleccionPrioridad(
                       formProperty: 'cuadrante',
                       formValues: formValues,
                     )
@@ -106,9 +105,9 @@ class RegistroActividad extends StatelessWidget {
   }
 }
 
-class seleccion extends StatelessWidget {
+class Seleccion extends StatelessWidget {
   final String tipo;
-  const seleccion({
+  const Seleccion({
     Key? key,
     required this.tipo,
   }) : super(key: key);
@@ -134,7 +133,7 @@ class seleccion extends StatelessWidget {
                     tipo,
                     style: TextStyle(color: Colors.black),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.arrow_drop_down_outlined,
                     color: Colors.black,
                   ),

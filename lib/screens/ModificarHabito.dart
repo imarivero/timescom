@@ -56,7 +56,7 @@ class ModificarHabito extends StatelessWidget {
               ),
               Row(
                 children: [
-                  seleccion(tipo: "Hora"),
+                  SeleccionHora(tipo: "Hora"),
                 ],
               ),
               const SizedBox(
@@ -71,13 +71,13 @@ class ModificarHabito extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      dias(inicialDia: "Lu"),
-                      dias(inicialDia: "Ma"),
-                      dias(inicialDia: "Mie"),
-                      dias(inicialDia: "Ju"),
-                      dias(inicialDia: "Vi"),
-                      dias(inicialDia: "Sa"),
-                      dias(inicialDia: "Do"),
+                      DiasPicker(inicialDia: "Lu"),
+                      DiasPicker(inicialDia: "Ma"),
+                      DiasPicker(inicialDia: "Mie"),
+                      DiasPicker(inicialDia: "Ju"),
+                      DiasPicker(inicialDia: "Vi"),
+                      DiasPicker(inicialDia: "Sa"),
+                      DiasPicker(inicialDia: "Do"),
                     ],
                   )
                 ],
@@ -108,9 +108,9 @@ class ModificarHabito extends StatelessWidget {
   }
 }
 
-class dias extends StatelessWidget {
+class DiasPicker extends StatelessWidget {
   final String inicialDia;
-  const dias({
+  const DiasPicker({
     Key? key,
     required this.inicialDia,
   }) : super(key: key);
@@ -137,9 +137,9 @@ class dias extends StatelessWidget {
   }
 }
 
-class seleccion extends StatelessWidget {
+class SeleccionHora extends StatelessWidget {
   final String tipo;
-  const seleccion({
+  const SeleccionHora({
     Key? key,
     required this.tipo,
   }) : super(key: key);

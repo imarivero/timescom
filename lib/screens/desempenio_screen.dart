@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timescom/screens/desempe%C3%B1o.dart';
+import 'package:timescom/screens/desempeno.dart';
 import 'package:timescom/screens/desempenio2.dart';
 import 'package:timescom/screens/desempenio3.dart';
 import 'package:timescom/theme/colors.dart';

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:timescom/models/habitosSugerencias.dart';
 import 'package:timescom/screens/loading_screen.dart';
 import 'package:timescom/services/sugerencia_service.dart';
 import 'package:timescom/widgets/sugerencia_card.dart';
-import 'package:flutter/material.dart';
-import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 import '../theme/colors.dart';
 
@@ -16,16 +13,16 @@ class SugerenciasScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final habitossugerencia = Provider.of<HabitsSugerenciasService>(context);
-    if (habitossugerencia.isLoading) return LoadingScreen();
+    if (habitossugerencia.isLoading) return const LoadingScreen();
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(170, 115, 128, 180),
+      backgroundColor: const Color.fromARGB(170, 115, 128, 180),
       appBar: AppBar(
         leading: IconButton(
             onPressed: () => Navigator.of(context).pop(),
-            icon: Icon(Icons.arrow_back_ios_new)),
-        title: Text("Sugerencias"),
-        flexibleSpace: ColorAppbar(),
+            icon: const Icon(Icons.arrow_back_ios_new)),
+        title: const Text("Sugerencias"),
+        flexibleSpace: const ColorAppbar(),
       ),
       body: ListView.builder(
         itemCount: habitossugerencia.habitossugeridos.length,
