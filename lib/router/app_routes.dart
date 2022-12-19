@@ -17,8 +17,6 @@ class AppRoutes {
     ScreenDef(route: 'detalleHabito', name: 'Pantalla vista de habito', screen: const DetalleHabito()),
     ScreenDef(route: 'pomodoroPage', name: 'Pantalla vista de pomodoro', screen: PomodoroPage()),
     ScreenDef(route: 'bienvenidoScreen', name: 'Pantalla bienvenida', screen: const WelcomeScreen()),
-    ScreenDef(route: 'creacionHabito', name: 'Pantalla creacion habito', screen: const CreacionHabitoScreen()),
-    ScreenDef(route: 'creacionActividad', name: 'Pantalla creacion actividad', screen: const CreacionActividadScreen()),
     ScreenDef(route: 'seleccionRegIniScreen', name: 'Pantalla seleccion registro o inicio sesion', screen: const SeleccionRegIniScreen()),
 
   ];
