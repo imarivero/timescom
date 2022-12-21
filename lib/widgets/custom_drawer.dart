@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timescom/theme/app_theme.dart';
@@ -97,7 +98,9 @@ class _DrawerMenuItems extends StatelessWidget {
             leading: const Icon(Icons.lock),
             title: Text('Cerrar Sesión',
               style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold,)),
-            onTap: () {},
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+            },
           ),
 
         ],

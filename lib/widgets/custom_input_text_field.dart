@@ -9,8 +9,11 @@ class CustomInputTextField extends StatelessWidget {
   final IconData? suffixIcon;
   final TextInputType? keyboardType;
   final bool? obscureText;
+  final TextCapitalization? textCapitalization;
   final String formProperty;
   final Map<String, String> formValues;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
 
   const CustomInputTextField({
     Key? key,
@@ -21,12 +24,16 @@ class CustomInputTextField extends StatelessWidget {
     this.suffixIcon,
     this.keyboardType,
     this.obscureText,
+    this.textCapitalization,
+    this.validator,
+    this.controller,
     required this.formProperty,
     required this.formValues,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
       child: Container(
@@ -46,7 +53,10 @@ class CustomInputTextField extends StatelessWidget {
             labelText: labelText, 
             helperText: helperText, 
             suffixIcon: suffixIcon, 
-            icon: icon
+            icon: icon,
+            textCapitalization: textCapitalization,
+            controller: controller,
+            validator: validator,
           ),
         ),
       ),
@@ -67,6 +77,9 @@ class TextFormFieldMod extends StatelessWidget {
     required this.helperText,
     required this.suffixIcon,
     required this.icon,
+    this.textCapitalization, 
+    this.validator, 
+    this.controller,
   }) : super(key: key);
 
   final TextInputType? keyboardType;
@@ -78,22 +91,22 @@ class TextFormFieldMod extends StatelessWidget {
   final String? helperText;
   final IconData? suffixIcon;
   final IconData? icon;
+  final TextCapitalization? textCapitalization;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
+
     return TextFormField(
       autofocus: false,
-      textCapitalization: TextCapitalization.words,
+      textCapitalization: textCapitalization == null ? TextCapitalization.none : textCapitalization!,
       keyboardType: keyboardType,
       onChanged: (value) {
         formValues[formProperty] = value;
       },
-      validator: (value) {
-        if(value == '') {
-          return 'Hola Mundo';
-        }
-        return null;
-      },
+      validator: validator == null ? null : validator!,
+      controller: controller,
       obscureText: obscureText == null ? false : true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(

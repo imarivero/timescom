@@ -4,9 +4,9 @@ import 'package:quickalert/quickalert.dart';
 import 'package:timescom/models/alumno.dart';
 import 'package:timescom/widgets/custom_input_text_field.dart';
 
-class RegistroAlumnoScreen extends StatelessWidget {
+class RegistroScreen extends StatelessWidget {
    
-  const RegistroAlumnoScreen({Key? key}) : super(key: key);
+  const RegistroScreen({Key? key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,6 @@ class RegistroAlumnoScreen extends StatelessWidget {
       'email'     : 'imarivero@outlook.com',
       'password'  : '123',
     };
-
 
     return Scaffold(
       body: SafeArea(
@@ -47,6 +46,7 @@ class RegistroAlumnoScreen extends StatelessWidget {
                   hintText: 'Nombre(s)',
                   formProperty: 'nombre',
                   formValues: formValues,
+                  textCapitalization: TextCapitalization.words,
                 ),
       
                 const SizedBox(height: 15,),
@@ -55,6 +55,7 @@ class RegistroAlumnoScreen extends StatelessWidget {
                   hintText: 'Apellido Paterno',
                   formProperty: 'apellidoPaterno',
                   formValues: formValues,
+                  textCapitalization: TextCapitalization.words,
                 ),
                 
                 const SizedBox(height: 15,),
@@ -63,6 +64,7 @@ class RegistroAlumnoScreen extends StatelessWidget {
                   hintText: 'Apellido Materno (opcional)',
                   formProperty: 'apellidoMaterno',
                   formValues: formValues,
+                  textCapitalization: TextCapitalization.words,
                 ),
                 
                 const SizedBox(height: 15,),
