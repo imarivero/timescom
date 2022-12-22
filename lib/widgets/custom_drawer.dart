@@ -100,6 +100,7 @@ class _DrawerMenuItems extends StatelessWidget {
               style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold,)),
             onTap: () {
               FirebaseAuth.instance.signOut();
+              Navigator.pushNamedAndRemoveUntil(context, 'authScreen', (route) => false);
             },
           ),
 

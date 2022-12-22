@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "442841628570",
+    "project_id": "timescom-tt",
+    "storage_bucket": "timescom-tt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442841628570:android:09bee59be5813c7901c423",
+        "android_client_info": {
+          "package_name": "com.example.timescom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442841628570-71a1s0r6oat16b6vjgo2bb4de2ai967q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4g2B6LhYw5cqa43fsfUYxok_iRlH5i-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442841628570-71a1s0r6oat16b6vjgo2bb4de2ai967q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "442841628570-2dvi30hp94nqi3ag8v9qub780d01bkdh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.timescom"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

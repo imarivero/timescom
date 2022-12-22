@@ -1,7 +1,7 @@
 class RegexConst{
 
   static final namePattern = RegExp(
-    r"^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*$",
+    r"^[A-Za-z]+([\.,]|[-']|\s)*[A-Za-z]+\.?$",
     caseSensitive: false, 
     unicode: true, 
     dotAll: true
@@ -33,7 +33,7 @@ class RegexConst{
     if(contrasena.isEmpty){
       return 'Ingresa tu contraseña';
     }
-    if(contrasena.length < 7){
+    if(contrasena.length < 6){
       return 'La contraseña debe de tener al menos 6 caracteres';
     }
     else{
@@ -41,19 +41,42 @@ class RegexConst{
     }
   }
 
-  
-  
-
-  
-  static bool validarCorreoBool(String? correo){
-    if(correo == null){
-      return false;
+  static String? validarNombre(String? value){
+    if(value == null){
+      return null;
     }
-    if(emailPattern.hasMatch(correo)){
-      return true;
+    else if(value.isEmpty){
+      return 'Ingresa tu nombre';
     }
-    else{
-      return false;
+    else if(namePattern.hasMatch(value)){
+      return null;
+    } else {
+      return 'Ingresa un nombre válido';
+    }
+  }
+  
+  static String? validarApellidoPat(String? value){
+    if(value == null){
+      return null;
+    }
+    else if(value.isEmpty){
+      return 'Ingresa tu apellido';
+    }
+    else if(namePattern.hasMatch(value)){
+      return null;
+    } else {
+      return 'Ingresa un apellido válido';
+    }
+  }
+  
+  static String? validarApellidoMat(String? value){
+    if(value == null || value.isEmpty){
+      return null;
+    }
+    else if(namePattern.hasMatch(value)){
+      return null;
+    } else {
+      return 'Ingresa un apellido válido';
     }
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timescom/helpers/regex_const.dart';
 import 'package:timescom/models/alumno.dart';
-import 'package:timescom/theme/app_theme.dart';
 import 'package:timescom/widgets/custom_input_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -23,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // Manejo de llaves de formulario
   final GlobalKey<FormState> _myFormKey = GlobalKey();
 
-  Future signIn() async{
+  Future iniciarSesion() async{
     // Carga mientras se resuelve el Future
     showDialog(
       context: context,
@@ -54,7 +53,6 @@ class _LoginScreenState extends State<LoginScreen> {
       errorMessage();
       // dispose();
     }
-    
   }
 
    // Mensaje de error general para cualquier codigo devuelto
@@ -106,30 +104,28 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                Center(
-                  child: Text('Iniciar Sesión', 
-                    style: GoogleFonts.inter(
-                    fontSize: 38,
-                    fontWeight: FontWeight.bold,)
+                  Center(
+                    child: Text('Iniciar Sesión', 
+                      style: GoogleFonts.inter(
+                      fontSize: 38,
+                      fontWeight: FontWeight.bold,)
+                    ),
                   ),
-                ),
-        
-                const SizedBox(height: 170,),
+          
+                  const SizedBox(height: 170,),
+              
+                  CustomInputTextField(
+                    hintText: 'Correo electrónico',
+                    keyboardType: TextInputType.emailAddress,
+                    formProperty: 'correo',
+                    formValues: formValues,
+                    controller: _emailController,
+                    validator: (value) => RegexConst.validarCorreo(value),
+                  ),
+              
+                  const SizedBox(height: 15,),
             
-                CustomInputTextField(
-                  hintText: 'Correo electrónico',
-                  keyboardType: TextInputType.emailAddress,
-                  formProperty: 'correo',
-                  formValues: formValues,
-                  controller: _emailController,
-                  // validator: (value) => RegexConst.validarCorreo(value),
-                  // validator: (value) => 'Prueba',
-                  validator: (value) => RegexConst.validarCorreo(value),
-                ),
-            
-                const SizedBox(height: 15,),
-            
-                CustomInputTextField(
+                  CustomInputTextField(
                     hintText: 'Contraseña',
                     obscureText: true,
                     formProperty: 'password',
@@ -138,6 +134,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     validator: (value) => RegexConst.validarContrasena(value),
                   ),
             
+                  const SizedBox(height: 15,),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                    child: GestureDetector(
+                      onTap: () => Navigator.pushReplacementNamed(context, 'restaurarPasswordScreen'),
+                      child: Text(
+                        '¿Olvidaste tu contraseña?',
+                        style: GoogleFonts.inter(
+                          color: Colors.lightBlueAccent
+                        ),
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ),
+
                   const SizedBox(height: 15,),
             
                   Padding(
@@ -148,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           // print('form invalido');
                           return;
                         }
-                        signIn();
+                        iniciarSesion();
                       },
                       child: const Text('Entrar', style: TextStyle(fontSize: 20),),
                     ),
