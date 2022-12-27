@@ -1,8 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
 import 'package:timescom/helpers/regex_const.dart';
 import 'package:timescom/models/alumno.dart';
+import 'package:timescom/providers/alumno_provider.dart';
+import 'package:timescom/providers/auth_provider.dart';
 import 'package:timescom/widgets/custom_input_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // Manejo de llaves de formulario
   final GlobalKey<FormState> _myFormKey = GlobalKey();
 
-  Future iniciarSesion() async{
+  Future iniciarSesion(AuthProvider authProvider, AlumnoProvider alumnoProvider) async{
     // Carga mientras se resuelve el Future
     showDialog(
       context: context,
@@ -33,64 +36,30 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     );
 
-    // Intentar iniciar sesion
-    try{
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text
-      );
-
-      // Hace pop a la pantalla de carga
-      Navigator.pop(context);
-
-      // Llama al autenticador para revisar el estado
-      Navigator.pushNamedAndRemoveUntil(context, 'authScreen', (route) => false);
-
-    } on FirebaseAuthException catch (e){
-      Navigator.pop(context);
-      print('Falla con codigo: ${e.code}');
-      print(e.message);
-      errorMessage();
-      // dispose();
-    }
-  }
-
-   // Mensaje de error general para cualquier codigo devuelto
-  void errorMessage() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.grey.shade800,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: Center(
-            child: Text(
-              'Usuario o contraseña incorrectos',
-              style: GoogleFonts.inter(
-                color: Colors.white
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          content: ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Aceptar', style: TextStyle(fontSize: 20),)
-          ),
-        );
-      },
+    Alumno? alumno = await authProvider.emailUserLogin(
+      _emailController.text, 
+      _passwordController.text, 
+      context
     );
+
+    if(alumno != null){
+      alumnoProvider.getAlumnoInfo(alumno);
+      Navigator.pushNamedAndRemoveUntil(context, 'wrapper', (route) => false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
 
-    final _alumno = Alumno();
+    // final _alumno = Alumno();
+    final authProvider = Provider.of<AuthProvider>(context);
+    final alumnoProvider = Provider.of<AlumnoProvider>(context);
 
     final Map<String, String> formValues = {
       'nombre': 'Omar Imanol',
       'apellido_paterno' : 'Rivero',
       'apellido_materno' : 'Ronquillo',
-      'email'     : 'imarivero@outlook.com',
+      'correo'     : 'imarivero@outlook.com',
       'password'  : '123',
     };
 
@@ -160,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           // print('form invalido');
                           return;
                         }
-                        iniciarSesion();
+                        iniciarSesion(authProvider, alumnoProvider);
                       },
                       child: const Text('Entrar', style: TextStyle(fontSize: 20),),
                     ),

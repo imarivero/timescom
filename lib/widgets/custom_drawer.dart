@@ -1,9 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:timescom/providers/alumno_provider.dart';
+import 'package:timescom/providers/auth_provider.dart';
 import 'package:timescom/theme/app_theme.dart';
 
 class CustomDrawer extends StatelessWidget {
+
   const CustomDrawer({super.key});
 
   @override
@@ -27,6 +31,9 @@ class _HeaderPicInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final alumnoProvider = Provider.of<AlumnoProvider>(context);
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(
@@ -43,12 +50,12 @@ class _HeaderPicInfo extends StatelessWidget {
 
           const SizedBox(height: 12,),
           
-          Text('<Alumno Apellido>',
+          Text('${alumnoProvider.alumno!.nombre} ${alumnoProvider.alumno!.apellidoPaterno}',
             style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           
-          Text('<Correo>',
-            style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold),
+          Text(alumnoProvider.alumno!.correo,
+            style: GoogleFonts.inter(fontSize: 18),
           ),
 
 
@@ -66,6 +73,9 @@ class _DrawerMenuItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Wrap(
@@ -99,8 +109,9 @@ class _DrawerMenuItems extends StatelessWidget {
             title: Text('Cerrar Sesión',
               style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold,)),
             onTap: () {
-              FirebaseAuth.instance.signOut();
-              Navigator.pushNamedAndRemoveUntil(context, 'authScreen', (route) => false);
+              // FirebaseAuth.instance.signOut();
+              authProvider.signOut();
+              Navigator.pushNamedAndRemoveUntil(context, 'wrapper', (route) => false);
             },
           ),
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:timescom/models/screen_def.dart';
-import 'package:timescom/screens/auth/main_screen.dart';
+// import 'package:timescom/screens/auth/main_screen_deprecated.dart';
 import 'package:timescom/screens/screens.dart';
+import 'package:timescom/wrapper.dart';
 
 class AppRoutes {
   // Si quieren ver su pantalla al compilar cambien este
@@ -11,7 +12,8 @@ class AppRoutes {
     // ScreenDef(route: 'welcomeScreen', name: 'Pantalla bienvenida', screen: screen)
     // ScreenDef(route: 'loginScreen', name: 'Pantalla inicio de sesion', screen: screen)
     ScreenDef(route: 'registroScreen', name: 'Pantalla registro de alumno', screen: const RegistroScreen()),
-    ScreenDef(route: 'authScreen', name: 'Servicio de autenticacion', screen: const MainScreen()),
+    // ScreenDef(route: 'authScreen', name: 'Servicio de autenticacion', screen: const MainScreenDeprecated()),
+    ScreenDef(route: 'wrapper', name: 'Servicio de autenticacion', screen: const Wrapper()),
     // ScreenDef(route: 'loginScreen', name: 'Pantalla inicio de sesión de alumno', screen: LoginPage()),
     ScreenDef(route: 'mainMatrizScreen', name: 'Pantalla vista matriz', screen: const MainMatrizScreen()),
     ScreenDef(route: 'detalleCategoria', name: 'Pantalla vista de categoria', screen: const DetalleCategoriaScreen()),

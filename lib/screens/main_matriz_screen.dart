@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:timescom/providers/alumno_provider.dart';
+import 'package:timescom/providers/auth_provider.dart';
 import 'package:timescom/widgets/widgets.dart';
 
 class MainMatrizScreen extends StatefulWidget {
@@ -29,7 +32,15 @@ class _MainMatrizScreenState extends State<MainMatrizScreen> with TickerProvider
   }
   
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+
+    final alumnoProvider = Provider.of<AlumnoProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
+
+    if(authProvider.userAuth != null && alumnoProvider.alumno!.nombre == ''){
+      alumnoProvider.getAlumnoInfo(authProvider.alumnoLogedPreviously()!);
+    }
+
     return Scaffold(
       key: scaffoldKey,
       drawer: const Drawer(child: CustomDrawer(),),
@@ -42,7 +53,9 @@ class _MainMatrizScreenState extends State<MainMatrizScreen> with TickerProvider
           
             // Saludo y nombre de alumno
             const SizedBox(height: 20,),
-            Text('Hola, \n <<Nombre del alumno>>', style: GoogleFonts.inter(fontSize: 35, fontWeight: FontWeight.bold)),
+            Text('Hola, \n ${alumnoProvider.alumno!.nombre} ${alumnoProvider.alumno!.apellidoPaterno}',
+              textAlign: TextAlign.start,
+              style: GoogleFonts.inter(fontSize: 35, fontWeight: FontWeight.bold)),
           
             // Tarjetas actividades y habitos
             const CardRow(),
@@ -86,3 +99,4 @@ class _MenuDrawerText extends StatelessWidget {
     );
   }
 }
+
