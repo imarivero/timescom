@@ -69,7 +69,6 @@ class _SingleCard extends StatelessWidget {
   final Categoria categoria;
 
   const _SingleCard({
-    super.key, 
     required this.titulo, 
     required this.numero, 
     required this.icon, 

@@ -11,19 +11,20 @@ class AppRoutes {
   static final listScreens = <ScreenDef>[
     // ScreenDef(route: 'welcomeScreen', name: 'Pantalla bienvenida', screen: screen)
     // ScreenDef(route: 'loginScreen', name: 'Pantalla inicio de sesion', screen: screen)
-    ScreenDef(route: 'registroScreen', name: 'Pantalla registro de alumno', screen: const RegistroScreen()),
-    // ScreenDef(route: 'authScreen', name: 'Servicio de autenticacion', screen: const MainScreenDeprecated()),
-    ScreenDef(route: 'wrapper', name: 'Servicio de autenticacion', screen: const Wrapper()),
-    // ScreenDef(route: 'loginScreen', name: 'Pantalla inicio de sesión de alumno', screen: LoginPage()),
-    ScreenDef(route: 'mainMatrizScreen', name: 'Pantalla vista matriz', screen: const MainMatrizScreen()),
-    ScreenDef(route: 'detalleCategoria', name: 'Pantalla vista de categoria', screen: const DetalleCategoriaScreen()),
-    ScreenDef(route: 'detalleActividad', name: 'Pantalla vista de actividad', screen: const DetalleActividadScreen()),
-    ScreenDef(route: 'detalleHabito', name: 'Pantalla vista de habito', screen: const DetalleHabito()),
-    ScreenDef(route: 'pomodoroPage', name: 'Pantalla vista de pomodoro', screen: PomodoroPage()),
     ScreenDef(route: 'bienvenidoScreen', name: 'Pantalla bienvenida', screen: const WelcomeScreen()),
-    ScreenDef(route: 'loginScreen', name: 'Pantalla de inicio de sesion', screen: LoginScreen()),
-    ScreenDef(route: 'seleccionRegIniScreen', name: 'Pantalla seleccion registro o inicio sesion', screen: const SeleccionRegIniScreen()),
+    ScreenDef(route: 'detalleActividad', name: 'Pantalla vista de actividad', screen: const DetalleActividadScreen()),
+    ScreenDef(route: 'detalleCategoria', name: 'Pantalla vista de categoria', screen: const DetalleCategoriaScreen()),
+    ScreenDef(route: 'detalleHabito', name: 'Pantalla vista de habito', screen: const DetalleHabito()),
+    ScreenDef(route: 'infoPerfil', name: 'Pantalla informacion de alumno', screen: const InfoPerfil()),
+    ScreenDef(route: 'loginScreen', name: 'Pantalla de inicio de sesion', screen: const LoginScreen()),
+    ScreenDef(route: 'mainMatrizScreen', name: 'Pantalla vista matriz', screen: const MainMatrizScreen()),
+    ScreenDef(route: 'modificarDatosAlumno', name: 'Pantalla modificacion de datos de alumno', screen: const ModificarDatos()),
+    ScreenDef(route: 'modificarPassword', name: 'Pantalla modificacion de contrasena', screen: const CambiarPassword()),
+    ScreenDef(route: 'pomodoroPage', name: 'Pantalla vista de pomodoro', screen: PomodoroPage()),
+    ScreenDef(route: 'registroScreen', name: 'Pantalla registro de alumno', screen: const RegistroScreen()),
     ScreenDef(route: 'restaurarPasswordScreen', name: 'Pantalla restauracion de contrasena', screen: RestaurarPasswordScreen()),
+    ScreenDef(route: 'seleccionRegIniScreen', name: 'Pantalla seleccion registro o inicio sesion', screen: const SeleccionRegIniScreen()),
+    ScreenDef(route: 'wrapper', name: 'Servicio de autenticacion', screen: const Wrapper()),
   ];
 
   static Map<String, Widget Function(BuildContext)> getAppRoutes(){

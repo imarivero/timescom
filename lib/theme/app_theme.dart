@@ -6,6 +6,7 @@ class AppTheme{
   static const Color primary = Colors.blue;
 
   static final ThemeData darkTheme = ThemeData.dark().copyWith(
+    
     primaryColor: primary,
     scaffoldBackgroundColor: Colors.black,
 
@@ -19,6 +20,8 @@ class AppTheme{
         minimumSize: const Size(240.0, 46.0)
       )
     ),
+
+    
 
   );
 }

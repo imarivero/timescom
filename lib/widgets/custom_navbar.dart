@@ -51,7 +51,7 @@ class CustomNavBar extends StatelessWidget {
             Navigator.pushNamed(context, 'pomodoroPage');
             break;
           default:
-            print('error');
+            // print('error');
             break;
         }
       },

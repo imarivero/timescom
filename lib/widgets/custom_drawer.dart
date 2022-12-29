@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -87,7 +86,7 @@ class _DrawerMenuItems extends StatelessWidget {
             leading: const Icon(Icons.person),
             title: Text('Perfil',
               style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold,)),
-            onTap: () {},
+            onTap: () => Navigator.pushNamed(context, 'infoPerfil'),
           ),
 
           ListTile(

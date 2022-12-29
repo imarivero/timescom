@@ -20,7 +20,18 @@ class RegexConst{
     } else if(!emailPattern.hasMatch(correo)){
       return 'Ingresa un correo institucional válido';
     }
-
+    else{
+      return null;
+    }
+  }
+  
+  static String? validarCorreoActualizado(String? correo){
+    if(correo == null){
+      return null;
+    }
+    if(correo.isNotEmpty && !emailPattern.hasMatch(correo)){
+      return 'Ingresa un correo institucional válido';
+    }
     else{
       return null;
     }

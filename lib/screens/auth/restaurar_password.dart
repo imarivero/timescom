@@ -1,12 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:timescom/helpers/regex_const.dart';
+import 'package:timescom/providers/auth_provider.dart';
 import 'package:timescom/widgets/custom_input_text_field.dart';
 
 class RestaurarPasswordScreen extends StatefulWidget {
    
-  RestaurarPasswordScreen({Key? key}) : super(key: key);
+  const RestaurarPasswordScreen({Key? key}) : super(key: key);
 
   @override
   State<RestaurarPasswordScreen> createState() => _RestaurarPasswordScreenState();
@@ -19,52 +20,54 @@ class _RestaurarPasswordScreenState extends State<RestaurarPasswordScreen> {
   // Manejo de llaves de formulario
   final GlobalKey<FormState> _myFormKey = GlobalKey();
 
-  Future restaurarContrasena() async{
-    try{
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: _emailController.text);
-      showMessage('¡El correo ha sido enviado! Asegurate de revisar la carpeta spam.');
-    } on FirebaseAuthException catch(e){
-      if(e.code == 'user-not-found'){
-        showMessage('El correo ingresado no esta registrado');
-      } else{
-        showMessage('Lo sentimos, ha ocurrido un error. Vuelve a intentarlo mas tarde.');
-      }
-    }
-  }
+  // Future restaurarContrasena() async{
+  //   try{
+  //     await FirebaseAuth.instance.sendPasswordResetEmail(email: _emailController.text);
+  //     showMessage('¡El correo ha sido enviado! Asegurate de revisar la carpeta spam.');
+  //   } on FirebaseAuthException catch(e){
+  //     if(e.code == 'user-not-found'){
+  //       showMessage('El correo ingresado no esta registrado');
+  //     } else{
+  //       showMessage('Lo sentimos, ha ocurrido un error. Vuelve a intentarlo mas tarde.');
+  //     }
+  //   }
+  // }
 
-    // Mensaje de error general para cualquier codigo devuelto
-  void showMessage(String mensaje) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.grey.shade800,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: Center(
-            child: Text(
-              mensaje,
-              // 'Lo sentimos, ha habido un error, vuelve a intentarlo mas tarde',
-              style: GoogleFonts.inter(
-                color: Colors.white
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          content: ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Aceptar', style: TextStyle(fontSize: 20),)
-          ),
-        );
-      },
-    );
-  }
+  //   // Mensaje de error general para cualquier codigo devuelto
+  // void showMessage(String mensaje) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return AlertDialog(
+  //         backgroundColor: Colors.grey.shade800,
+  //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+  //         title: Center(
+  //           child: Text(
+  //             mensaje,
+  //             // 'Lo sentimos, ha habido un error, vuelve a intentarlo mas tarde',
+  //             style: GoogleFonts.inter(
+  //               color: Colors.white
+  //             ),
+  //             textAlign: TextAlign.center,
+  //           ),
+  //         ),
+  //         content: ElevatedButton(
+  //           onPressed: () => Navigator.pop(context),
+  //           child: const Text('Aceptar', style: TextStyle(fontSize: 20),)
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
 
     final Map<String, String> formValues = {
-      'email'     : 'imarivero@outlook.com',
+      'email'     : 'ima@outlook.com',
     };
+
+    final authProvider = Provider.of<AuthProvider>(context);
 
     return Scaffold(
       body: SafeArea(
@@ -122,7 +125,9 @@ class _RestaurarPasswordScreenState extends State<RestaurarPasswordScreen> {
                           // print('form invalido');
                           return;
                         }
-                        restaurarContrasena();
+                        // restaurarContrasena();
+                        authProvider.restaurarContrasena(_emailController.text, context);
+
                       },
                       child: const Text('Enviar Correo', style: TextStyle(fontSize: 18),),
                     ),

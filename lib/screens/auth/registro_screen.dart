@@ -40,15 +40,15 @@ class _RegistroScreenState extends State<RegistroScreen> {
     // Verifica si las contrasenas ingresadas son iguales
     if(confirmacionPassword()){
 
-      // Carga mientras se resuelve el Future
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      );
+      // // Carga mientras se resuelve el Future
+      // showDialog(
+      //   context: context,
+      //   builder: (context) {
+      //     return const Center(
+      //       child: CircularProgressIndicator(),
+      //     );
+      //   },
+      // );
 
       // Remover contrasenas del mapeo
       formValues.remove('password');
@@ -64,13 +64,18 @@ class _RegistroScreenState extends State<RegistroScreen> {
         formValues['id_alumno'] = alumno.uid;
         await alumnoProvider.addAlumnoInfo(alumno, formValues);
         await alumnoProvider.getAlumnoInfo(alumno);
+
+        // Llama al wrapper
+        if(!mounted) return;
+        Navigator.pushNamedAndRemoveUntil(context, 'wrapper', (route) => false);
       }
+
       
       // Hace pop a la pantalla de carga
-      Navigator.pop(context);
+      // Navigator.pop(context);
 
-      // Llama al wrapper
-      Navigator.pushNamedAndRemoveUntil(context, 'wrapper', (route) => false);
+      
+      
 
     } else{
       authProvider.errorMessage('Error: Las contraseñas no son iguales, por favor, verifica tus datos', context);

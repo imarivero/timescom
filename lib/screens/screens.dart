@@ -1,5 +1,9 @@
 // Archivo barrel de exportacion de archivos en /screen
+
+export 'package:timescom/screens/auth/cambiar_password.dart';
+export 'package:timescom/screens/auth/info_perfil.dart';
 export 'package:timescom/screens/auth/login_screen.dart';
+export 'package:timescom/screens/auth/modificar_datos.dart';
 export 'package:timescom/screens/auth/registro_screen.dart';
 export 'package:timescom/screens/auth/restaurar_password.dart';
 export 'package:timescom/screens/bienvenido.dart';

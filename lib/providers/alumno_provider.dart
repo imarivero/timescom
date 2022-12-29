@@ -26,11 +26,45 @@ class AlumnoProvider with ChangeNotifier{
       print(e.message);
     }
   }
+  
+  Future<void> actualizarAlumnoInfo(Map<String, String> formValues) async{
+    // Unicamente no pueden modificar su user_id
+    // El mapa debe incluir solo las llaves que se van a modificar para mejorar el performance
+    if(alumno != null){
+      try{
+        await _firestore
+        .collection('alumnos')
+        .doc(alumno!.uid)
+        .update(formValues);
+
+        formValues.forEach((key, value) {
+          switch (key) {
+            case 'nombre':
+              alumno!.setNombre = value;
+              break;
+            case 'apellido_paterno':
+              alumno!.setApePaterno = value;
+              break;
+            case 'apellido_materno':
+              alumno!.setApeMaterno = value;
+              break;
+            case 'correo':
+              alumno!.setCorreo = value;
+              break;
+            default:
+              break;
+          }
+        });
+        notifyListeners();
+      } on FirebaseException catch (e){
+        print(e.message);
+      }
+    }
+  }
 
   Future<Alumno?> getAlumnoInfo(Alumno alumnoInit) async{
-    print(alumnoInit.uid);
-
-    final DocumentSnapshot<Map<String, dynamic>> doc = await _firestore
+    // print(alumnoInit.uid);
+    await _firestore
     .collection('alumnos')
     .doc(alumnoInit.uid)
     .get()
@@ -46,11 +80,18 @@ class AlumnoProvider with ChangeNotifier{
         }
         return value;
       },
-      onError: (e) => print("Error getting document: $e"),
+      onError: (e) => print("Error al traer el documento: $e"),
     );
 
     notifyListeners();
     return alumno;
+  }
+  
+  Future<void> eliminarDatosAlumno(Alumno alumnoDatos) async{
+    await _firestore
+    .collection('alumnos')
+    .doc(alumnoDatos.uid)
+    .delete();
   }
 
   // Alumno? _userFromFirestore()

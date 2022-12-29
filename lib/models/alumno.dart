@@ -25,7 +25,7 @@ class Alumno{
       'apellido_paterno' : apellidoPaterno,
       'apellido_materno' : apellidoMaterno,
       'correo'     : correo,
-      'password'  : uid,
+      'uid'  : uid,
     };
     return alumnoMap;
   }
@@ -36,8 +36,24 @@ class Alumno{
       alumnoMap['apellido_paterno'] == null ? '' : alumnoMap['apellido_paterno']!,
       alumnoMap['apellido_materno'] == null ? '' : alumnoMap['apellido_materno']!,
       alumnoMap['correo'] == null ? '' : alumnoMap['correo']!,
-      alumnoMap['uid'] == null ? '' : alumnoMap['uid']!
+      alumnoMap['id_alumno'] == null ? '' : alumnoMap['id_alumno']!
     );
+  }
+
+  set setNombre(String value){
+    nombre = value;
+  }
+  
+  set setApePaterno(String value){
+    apellidoPaterno = value;
+  }
+  
+  set setApeMaterno(String value){
+    apellidoMaterno = value;
+  }
+  
+  set setCorreo(String value){
+    correo = value;
   }
 
 }

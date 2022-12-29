@@ -10,7 +10,7 @@ import 'package:timescom/widgets/custom_input_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
    
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -27,14 +27,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future iniciarSesion(AuthProvider authProvider, AlumnoProvider alumnoProvider) async{
     // Carga mientras se resuelve el Future
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
+    // showDialog(
+    //   context: context,
+    //   builder: (context) {
+    //     return const Center(
+    //       child: CircularProgressIndicator(),
+    //     );
+    //   },
+    // );
 
     Alumno? alumno = await authProvider.emailUserLogin(
       _emailController.text, 
@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if(alumno != null){
       alumnoProvider.getAlumnoInfo(alumno);
       Navigator.pushNamedAndRemoveUntil(context, 'wrapper', (route) => false);
-    }
+    } 
   }
 
   @override

@@ -26,7 +26,6 @@ class _SingleCard extends StatelessWidget {
   final Categoria categoria;
 
   const _SingleCard({
-    super.key,
     required this.titulo, 
     required this.descripcion,
     required this.categoria
@@ -35,7 +34,7 @@ class _SingleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       height: 100,
       width: 170, // TODO: revisar expansion de pixeles de pantalla
       decoration: BoxDecoration(

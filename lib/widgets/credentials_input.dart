@@ -1,0 +1,93 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:timescom/helpers/regex_const.dart';
+import 'package:timescom/providers/alumno_provider.dart';
+import 'package:timescom/providers/auth_provider.dart';
+import 'package:timescom/widgets/widgets.dart';
+
+class CredentialsInput{
+
+  static eliminarCuenta(AlumnoProvider alumnoProvider, AuthProvider authProvider, BuildContext context) async{
+
+    // Carga mientras se resuelve el Future
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    await alumnoProvider.eliminarDatosAlumno(alumnoProvider.alumno!);
+    await authProvider.eliminarCuenta(context);
+  }
+
+  static Future<void> showInputDialog(BuildContext context, String sigPantalla) async{
+
+    final Map<String, String> formMap = {};
+    final _passwordController = TextEditingController();
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final alumnoProvider = Provider.of<AlumnoProvider>(context, listen: false);
+    bool validacion = false;
+    
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          icon: const Icon(Icons.warning),
+          backgroundColor: Colors.grey.shade800,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          // icon: error == false ? const Icon(Icons.check) : const Icon(Icons.error),
+          title: Center(
+            child: Text(
+              'Para hacer cambios a tu cuenta, primero debes volver a ingresar tu contraseña',
+              style: GoogleFonts.inter(
+                color: Colors.white
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          content: CustomInputTextField(
+            hintText: 'Contraseña',
+            formProperty: 'password',
+            formValues: formMap,
+            controller: _passwordController,
+            obscureText: true,
+            validator: (value) => RegexConst.validarContrasena(value),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancelar', style: TextStyle(fontSize: 20),)
+            ),
+
+            TextButton(
+              onPressed: () async{
+                int count = 0;
+                validacion = await authProvider.reAuthAlumno(context, _passwordController.text);
+
+                if(validacion && sigPantalla == 'eliminacion'){
+                  
+                  await Future.delayed(const Duration(seconds: 1));
+                  await eliminarCuenta(alumnoProvider, authProvider, context);
+                  await Future.delayed(const Duration(seconds: 2));
+                  await authProvider.errorMessage('Cuenta eliminada con exito', context);
+                  Navigator.pushNamedAndRemoveUntil(context, 'wrapper', (route) => false);
+                  
+                }else if(validacion){
+                  await Future.delayed(const Duration(seconds: 2));
+                  // Hace pop a la pantalla de confirmacion y luego a la de input de credenciales
+                  Navigator.popUntil(context, (_) => count++ >= 2);
+                  await Navigator.pushNamed(context, sigPantalla);
+                }
+              },
+              child: const Text('Continuar', style: TextStyle(fontSize: 20, color: Colors.red),)
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
