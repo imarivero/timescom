@@ -71,6 +71,7 @@ class _CambiarPasswordState extends State<CambiarPassword> {
                     formProperty: 'password',
                     formValues: formValues,
                     obscureText: true,
+                    maxLines: 1,
                     controller: _passwordController,
                     validator: (value) => RegexConst.validarContrasena(value),
                   ),

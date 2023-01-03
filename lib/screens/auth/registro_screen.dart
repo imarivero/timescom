@@ -3,8 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:timescom/helpers/regex_const.dart';
 import 'package:timescom/models/alumno.dart';
-import 'package:timescom/providers/alumno_provider.dart';
-import 'package:timescom/providers/auth_provider.dart';
+import 'package:timescom/providers/providers.dart';
 import 'package:timescom/widgets/custom_input_text_field.dart';
 
 class RegistroScreen extends StatefulWidget {
@@ -35,7 +34,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
     'ultimo_login' : DateTime.now().toString(),
   };
 
-  Future registrarAlumno(AuthProvider authProvider, AlumnoProvider alumnoProvider) async{
+  Future registrarAlumno(AuthProvider authProvider, AlumnoProvider alumnoProvider, TaskProvider taskProvider) async{
 
     // Verifica si las contrasenas ingresadas son iguales
     if(confirmacionPassword()){
@@ -64,6 +63,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
         formValues['id_alumno'] = alumno.uid;
         await alumnoProvider.addAlumnoInfo(alumno, formValues);
         await alumnoProvider.getAlumnoInfo(alumno);
+        taskProvider.setIdAlumno = alumno.uid;
 
         // Llama al wrapper
         if(!mounted) return;
@@ -73,9 +73,6 @@ class _RegistroScreenState extends State<RegistroScreen> {
       
       // Hace pop a la pantalla de carga
       // Navigator.pop(context);
-
-      
-      
 
     } else{
       authProvider.errorMessage('Error: Las contraseñas no son iguales, por favor, verifica tus datos', context);
@@ -97,6 +94,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
     
     final authProvider = Provider.of<AuthProvider>(context);
     final alumnoProvider = Provider.of<AlumnoProvider>(context);
+    final taskProvider = Provider.of<TaskProvider>(context);
     // final _alumno = Alumno();
 
     return Scaffold(
@@ -168,6 +166,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                     obscureText: true,
                     formProperty: 'password',
                     formValues: formValues,
+                    maxLines: 1,
                     controller: _passwordController,
                     validator: (value) => RegexConst.validarContrasena(value),
                   ),
@@ -179,6 +178,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                   obscureText: true,
                   formProperty: 'password_check',
                   formValues: formValues,
+                  maxLines: 1,
                   controller: _confirmPasswordController,
                   validator: (value) => RegexConst.validarContrasena(value),
                 ),
@@ -199,7 +199,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                         return;
                       }
 
-                      registrarAlumno(authProvider, alumnoProvider);
+                      registrarAlumno(authProvider, alumnoProvider, taskProvider);
                       
     
                     },

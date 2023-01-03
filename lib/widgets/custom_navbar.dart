@@ -6,6 +6,7 @@ class CustomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Verificar el funcionamiento del navbar para que las pantallas no se encimen
     return BottomNavigationBar(
       selectedItemColor: Colors.white,
       backgroundColor: Colors.black,
@@ -17,15 +18,6 @@ class CustomNavBar extends StatelessWidget {
           icon: Icon(Icons.house, color: Colors.white,),
           label: 'Inicio',
         ),
-
-        // BottomNavigationBarItem(
-        //   icon: CircleAvatar(
-        //     backgroundColor: AppTheme.primary,
-        //     radius: 20,
-        //     child: FaIcon(FontAwesomeIcons.plus, color: Colors.white,),
-        //   ),
-        //   label: 'Nuevo',
-        // ),
 
         // foo item para mantener la separacion en la barra
         BottomNavigationBarItem(
@@ -45,7 +37,7 @@ class CustomNavBar extends StatelessWidget {
             Navigator.pushNamed(context, 'mainMatrizScreen');
             break;
           case 1:
-            Navigator.pushNamed(context, 'regisAlumnoScreen');
+            // Navigator.pushNamed(context, 'cre');
             break;
           case 2:
             Navigator.pushNamed(context, 'pomodoroPage');

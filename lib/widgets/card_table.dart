@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:timescom/models/categoria.dart';
+import 'package:timescom/providers/providers.dart';
 
 class CardTable extends StatelessWidget {
+
   const CardTable({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    final taskProvider = Provider.of<TaskProvider>(context);
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -18,18 +24,18 @@ class CardTable extends StatelessWidget {
               children: [
                   _SingleCard(
                   titulo: 'Urgente + Importante', 
-                  numero: 10, 
+                  numero: taskProvider.listActividadesUrgIm.length, 
                   icon: FontAwesomeIcons.exclamation,
                   color: Colors.red,
-                  categoria: Categoria(titulo: 'Urgente +\nImportante'),
+                  categoria: Categoria(titulo: 'urgente+importante', descripcion: 'Urgente +\nImportante'),
                 ),
                 
                 _SingleCard(
                   titulo: 'Urgente + No Importante', 
-                  numero: 10, 
+                  numero: taskProvider.listActividadesUrgNim.length, 
                   icon: FontAwesomeIcons.bolt,
                   color: Colors.yellow.shade900,
-                  categoria: Categoria(titulo: 'Urgente +\n No Importante'),
+                  categoria: Categoria(titulo: 'urgente+noimportante', descripcion: 'Urgente +\n No Importante'),
                 ),
               ]
             ),
@@ -38,18 +44,18 @@ class CardTable extends StatelessWidget {
               children: [
                  _SingleCard(
                   titulo: 'No urgente + Importante', 
-                  numero: 10, 
+                  numero: taskProvider.listActividadesNurgIm.length, 
                   icon: FontAwesomeIcons.bath,
                   color: Colors.purple,
-                  categoria: Categoria(titulo: 'No urgente +\n Importante'),
+                  categoria: Categoria(titulo: 'nourgente+importante', descripcion: 'No urgente +\n Importante'),
                 ),
                 
                 _SingleCard(
                   titulo: 'No Urgente + No Importante', 
-                  numero: 10, 
+                  numero: taskProvider.listActividadesNurgNim.length, 
                   icon: FontAwesomeIcons.basketball,
                   color: Colors.green.shade700,
-                  categoria: Categoria(titulo: 'No Urgente +\n No Importante'),
+                  categoria: Categoria(titulo: 'nourgente+noimportante', descripcion: 'No Urgente +\n No Importante'),
                 ),
               ]
             )
@@ -78,16 +84,16 @@ class _SingleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      height: 140,
-      width: 140, // TODO: revisar expansion de pixeles de pantalla
-      decoration: BoxDecoration(
-        color: Colors.grey.shade900,
-        borderRadius: BorderRadius.circular(20)
-      ),
-      child: GestureDetector(
-        onTap: () => Navigator.pushNamed(context, 'detalleCategoria', arguments: categoria),
+    double width = MediaQuery.of(context).size.width;
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, 'categoriaActividad', arguments: categoria),
+      child: Container(
+        margin: const EdgeInsets.all(10),
+        height: width/2.5,
+        decoration: BoxDecoration(
+          color: Colors.grey.shade900,
+          borderRadius: BorderRadius.circular(20)
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -98,7 +104,7 @@ class _SingleCard extends StatelessWidget {
                 radius: 20,
                 child: Icon(icon, color: Colors.white),
               ),
-      
+        
               Text('$numero Actividades', style: GoogleFonts.inter(),),
               
               Text(titulo, style: GoogleFonts.inter(fontSize: 17, fontWeight: FontWeight.bold),)

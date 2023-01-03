@@ -53,6 +53,7 @@ class CredentialsInput{
             hintText: 'Contraseña',
             formProperty: 'password',
             formValues: formMap,
+            maxLines: 1,
             controller: _passwordController,
             obscureText: true,
             validator: (value) => RegexConst.validarContrasena(value),
@@ -71,6 +72,8 @@ class CredentialsInput{
                 if(validacion && sigPantalla == 'eliminacion'){
                   
                   await Future.delayed(const Duration(seconds: 1));
+
+                  // TODO: Corregir llamadas al contexto
                   await eliminarCuenta(alumnoProvider, authProvider, context);
                   await Future.delayed(const Duration(seconds: 2));
                   await authProvider.errorMessage('Cuenta eliminada con exito', context);

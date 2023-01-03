@@ -14,8 +14,9 @@ class DetalleHabito extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final Habito habito = ModalRoute.of(context)!.settings.arguments as Habito;
-    habito.hora = DateTime.now();
+    // habito.hora = DateTime.now();
     habito.descripcion = 'Descripcion habito';
+    habito.hora = '14:21';
     
     return Scaffold(
       body: SafeArea(
@@ -80,7 +81,8 @@ class _Descripcion extends StatelessWidget {
             Text(habito.descripcion!, style: GoogleFonts.inter(fontSize: 20)),
           const SizedBox(height: 30,),
           if(habito.hora != null)
-            Text('Hora: ${format.format(habito.hora!)}', style: GoogleFonts.inter(fontSize: 20)),
+            Text('Hora: ${habito.hora}', style: GoogleFonts.inter(fontSize: 20)),
+            // Text('Hora: ${format.format(habito.hora!)}', style: GoogleFonts.inter(fontSize: 20)),
           const SizedBox(height: 30,),
           // TODO: Construir burbujas
         ],

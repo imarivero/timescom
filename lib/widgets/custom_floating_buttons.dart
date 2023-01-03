@@ -30,7 +30,7 @@ class CustomFloatingButtons extends StatelessWidget {
           titleStyle: const TextStyle(fontSize: 16 , color: Colors.white),
           onPress: () {
             animationController.reverse();
-            Navigator.pushNamed(context, 'creacionHabito');
+            Navigator.pushNamed(context, 'crearHabito');
           },
         ),
         // Floating action menu item
@@ -42,7 +42,7 @@ class CustomFloatingButtons extends StatelessWidget {
           titleStyle: const TextStyle(fontSize: 16 , color: Colors.white),
           onPress: () {
             animationController.reverse();
-            Navigator.pushNamed(context, 'creacionActividad');
+            Navigator.pushNamed(context, 'crearActividad');
           },
         ),
         

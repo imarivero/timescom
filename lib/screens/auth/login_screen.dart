@@ -6,6 +6,8 @@ import 'package:timescom/helpers/regex_const.dart';
 import 'package:timescom/models/alumno.dart';
 import 'package:timescom/providers/alumno_provider.dart';
 import 'package:timescom/providers/auth_provider.dart';
+import 'package:timescom/providers/habit_provider.dart';
+import 'package:timescom/providers/tasks_provider.dart';
 import 'package:timescom/widgets/custom_input_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -25,7 +27,11 @@ class _LoginScreenState extends State<LoginScreen> {
   // Manejo de llaves de formulario
   final GlobalKey<FormState> _myFormKey = GlobalKey();
 
-  Future iniciarSesion(AuthProvider authProvider, AlumnoProvider alumnoProvider) async{
+  Future iniciarSesion(
+    AuthProvider authProvider, 
+    AlumnoProvider alumnoProvider,
+    TaskProvider taskProvider,
+    HabitProvider habitProvider) async{
     // Carga mientras se resuelve el Future
     // showDialog(
     //   context: context,
@@ -43,7 +49,10 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     if(alumno != null){
-      alumnoProvider.getAlumnoInfo(alumno);
+      await alumnoProvider.getAlumnoInfo(alumno);
+      await taskProvider.getActividades(alumno.uid);
+      
+      if(!mounted) return;
       Navigator.pushNamedAndRemoveUntil(context, 'wrapper', (route) => false);
     } 
   }
@@ -54,6 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
     // final _alumno = Alumno();
     final authProvider = Provider.of<AuthProvider>(context);
     final alumnoProvider = Provider.of<AlumnoProvider>(context);
+    final taskProvider = Provider.of<TaskProvider>(context);
+    final habitProvider = Provider.of<HabitProvider>(context);
 
     final Map<String, String> formValues = {
       'nombre': 'Omar Imanol',
@@ -100,6 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     formProperty: 'password',
                     formValues: formValues,
                     controller: _passwordController,
+                    maxLines: 1,
                     validator: (value) => RegexConst.validarContrasena(value),
                   ),
             
@@ -129,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           // print('form invalido');
                           return;
                         }
-                        iniciarSesion(authProvider, alumnoProvider);
+                        iniciarSesion(authProvider, alumnoProvider, taskProvider, habitProvider);
                       },
                       child: const Text('Entrar', style: TextStyle(fontSize: 20),),
                     ),

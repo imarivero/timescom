@@ -18,16 +18,14 @@ class _DetalleCategoriaScreenState extends State<DetalleCategoriaScreen> with Ti
   @override
   Widget build(BuildContext context) {
 
-    final Categoria categoria = ModalRoute.of(context)!.settings.arguments as Categoria;
-
     late final AnimationController animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 260),
     );
-
     late final curvedAnimation = CurvedAnimation(curve: Curves.easeInOut, parent: animationController);
-    
     late final Animation<double> animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
+
+    final Categoria categoria = ModalRoute.of(context)!.settings.arguments as Categoria;
 
     Map<String, bool> diasRepeticion = {
       'Lunes': true,
@@ -55,10 +53,18 @@ class _DetalleCategoriaScreenState extends State<DetalleCategoriaScreen> with Ti
 
             const SizedBox(height: 40,),
 
+            // if(categoria.listaActividad != null)
+            //   ListView.builder(
+            //     itemCount: categoria.listaActividad!.length,
+            //     itemBuilder: (context, index) {
+                  
+            //     },
+            //   ),
+
             // TODO: Cambiar por un list builder
-            _ActividadHabitoCard(objeto: Actividad(prioridad: 1, titulo: 'Hola'),icon: Icons.bolt, color: Colors.blue,),
-            _ActividadHabitoCard(objeto: Habito(titulo: 'Hábito de prueba', diasRepeticion: diasRepeticion),icon: Icons.bolt, color: Colors.blue,),
-            _ActividadHabitoCard(objeto: Actividad(prioridad: 1, titulo: 'Hola2') ,icon: Icons.bolt, color: Colors.blue,),
+            // _ActividadHabitoCard(objeto: Actividad(prioridad: 1, titulo: 'Hola'),icon: Icons.bolt, color: Colors.blue,),
+            // _ActividadHabitoCard(objeto: Habito(titulo: 'Hábito de prueba', diasRepeticion: diasRepeticion),icon: Icons.bolt, color: Colors.blue,),
+            // _ActividadHabitoCard(objeto: Actividad(prioridad: 1, titulo: 'Hola2') ,icon: Icons.bolt, color: Colors.blue,),
 
           ],
         ),

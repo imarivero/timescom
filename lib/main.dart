@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'package:timescom/providers/alumno_provider.dart';
-import 'package:timescom/providers/auth_provider.dart';
+import 'package:timescom/providers/providers.dart';
 import 'package:timescom/router/app_routes.dart';
 import 'package:timescom/theme/app_theme.dart';
 import 'package:timescom/wrapper.dart';
@@ -30,7 +30,9 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => AlumnoProvider())
+        ChangeNotifierProvider(create: (_) => AlumnoProvider()),
+        ChangeNotifierProvider(create: (_) => TaskProvider()),
+        ChangeNotifierProvider(create: (_) => HabitProvider()),
       ],
       child: const MyApp(),
     );
@@ -53,6 +55,12 @@ class MyApp extends StatelessWidget {
       routes: AppRoutes.getAppRoutes(),
       theme: AppTheme.darkTheme,
       // onGenerateRoute: ,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('es', '')],
     );
   }
 }

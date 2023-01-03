@@ -20,9 +20,9 @@ class RegexConst{
     } else if(!emailPattern.hasMatch(correo)){
       return 'Ingresa un correo institucional válido';
     }
-    else{
-      return null;
-    }
+    // else{
+    //   return null;
+    // }
   }
   
   static String? validarCorreoActualizado(String? correo){
@@ -90,4 +90,21 @@ class RegexConst{
       return 'Ingresa un apellido válido';
     }
   }
+  
+  static String? validarTitulo(String? value){
+    if(value == null || value.isEmpty){
+      return 'Ingresa al menos un titulo';
+    }
+    else {
+      return null;
+    }
+  }
+  
+  // static String? validarDescripcion(String? value){
+  //   if(value == null || value.isEmpty){
+  //     return null;
+  //   } if (value.isNotEmpty){
+  //     re
+  //   }
+  // }
 }

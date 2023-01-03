@@ -14,6 +14,8 @@ class CustomInputTextField extends StatelessWidget {
   final Map<String, String> formValues;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
+  final int? maxLines;
+  final int? minLines;
 
   const CustomInputTextField({
     Key? key,
@@ -27,6 +29,8 @@ class CustomInputTextField extends StatelessWidget {
     this.textCapitalization,
     this.validator,
     this.controller,
+    this.maxLines, 
+    this.minLines,
     required this.formProperty,
     required this.formValues,
   }) : super(key: key);
@@ -45,6 +49,7 @@ class CustomInputTextField extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 15.0),
           child: TextFormFieldMod(
+            
             keyboardType: keyboardType, 
             formValues: formValues, 
             formProperty: formProperty, 
@@ -57,6 +62,8 @@ class CustomInputTextField extends StatelessWidget {
             textCapitalization: textCapitalization,
             controller: controller,
             validator: validator,
+            maxLines: maxLines,
+            minLines: minLines,
           ),
         ),
       ),
@@ -80,6 +87,8 @@ class TextFormFieldMod extends StatelessWidget {
     this.textCapitalization, 
     this.validator, 
     this.controller,
+    this.maxLines,
+    this.minLines,
   }) : super(key: key);
 
   final TextInputType? keyboardType;
@@ -94,6 +103,8 @@ class TextFormFieldMod extends StatelessWidget {
   final TextCapitalization? textCapitalization;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
+  final int? maxLines;
+  final int? minLines;
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +120,8 @@ class TextFormFieldMod extends StatelessWidget {
       controller: controller,
       obscureText: obscureText == null ? false : true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      maxLines: maxLines,
+      minLines: minLines,
       decoration: InputDecoration(
         hintText: hintText,
         labelText: labelText,

@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:timescom/providers/alumno_provider.dart';
 import 'package:timescom/providers/auth_provider.dart';
+import 'package:timescom/providers/habit_provider.dart';
+import 'package:timescom/providers/tasks_provider.dart';
 import 'package:timescom/widgets/widgets.dart';
 
 class MainMatrizScreen extends StatefulWidget {
@@ -36,9 +38,13 @@ class _MainMatrizScreenState extends State<MainMatrizScreen> with TickerProvider
 
     final alumnoProvider = Provider.of<AlumnoProvider>(context);
     final authProvider = Provider.of<AuthProvider>(context);
+    final taskProvider = Provider.of<TaskProvider>(context);
+    final habitProvider = Provider.of<HabitProvider>(context);
 
+    // Comprueba si ya esta abierta la sesion y se trae los datos de nuevo
     if(authProvider.userAuth != null && alumnoProvider.alumno!.nombre == ''){
       alumnoProvider.getAlumnoInfo(authProvider.alumnoLogedPreviously()!);
+      taskProvider.getActividades(authProvider.userAuth!.uid);
     }
 
     return Scaffold(
