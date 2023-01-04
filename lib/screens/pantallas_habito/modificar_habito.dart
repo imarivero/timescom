@@ -4,20 +4,21 @@ import 'dart:io' show Platform;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:timescom/helpers/regex_const.dart';
+import 'package:timescom/models/habito.dart';
 import 'package:timescom/providers/alumno_provider.dart';
 import 'package:timescom/providers/habit_provider.dart';
 import 'package:timescom/widgets/widgets.dart';
 
 
-class CrearHabitoScreen extends StatefulWidget {
+class ModificarHabitoScreen extends StatefulWidget {
    
-  const CrearHabitoScreen({Key? key}) : super(key: key);
+  const ModificarHabitoScreen({Key? key}) : super(key: key);
 
   @override
-  State<CrearHabitoScreen> createState() => _CrearHabitoScreenState();
+  State<ModificarHabitoScreen> createState() => _ModificarHabitoScreenState();
 }
 
-class _CrearHabitoScreenState extends State<CrearHabitoScreen> {
+class _ModificarHabitoScreenState extends State<ModificarHabitoScreen> {
 
   final GlobalKey<FormState> _myFormKey = GlobalKey();
 
@@ -25,18 +26,11 @@ class _CrearHabitoScreenState extends State<CrearHabitoScreen> {
   final _descripcionController = TextEditingController();
 
   String idAlumno = '';
-  String textoHora = 'Selecciona una hora';
+  String textoHora = '';
+  bool modificoHora = false; // para saber si ya se modifico el texto
 
   final Map<String, String> formValues = {};
-  final Map<String, bool> diasRepeticion = {
-    'Lu': false,
-    'Ma': false,
-    'Mi': false,
-    'Ju': false,
-    'Vi': false,
-    'Sa': false,
-    'Do': false,
-  };
+  Map<String, bool> diasRepeticion = {};
   final Map<String, dynamic> mapaHabito = {};
 
   Color color = Colors.red;
@@ -45,7 +39,7 @@ class _CrearHabitoScreenState extends State<CrearHabitoScreen> {
   DateTime lastDate = DateTime(1);
   TimeOfDay initTime = TimeOfDay.now();
   
-  _CrearHabitoScreenState(){
+  _ModificarHabitoScreenState(){
     // date.add(const Duration(days: 1));
     lastDate = date.add(const Duration(days: 3650));
   }
@@ -61,18 +55,19 @@ class _CrearHabitoScreenState extends State<CrearHabitoScreen> {
     return bandera;
   }
 
-  Future<void> crearHabito(HabitProvider habitProvider) async{
+  Future<void> modificarHabito(HabitProvider habitProvider, Habito oldHabito) async{
 
     mapaHabito.addAll(formValues);
     mapaHabito['dias_repeticion'] = diasRepeticion;
 
-    bool exito = await habitProvider.addHabito(mapaHabito);
+    bool exito = await habitProvider.updateHabito(mapaHabito, oldHabito);
 
     if(!mounted) return;
-    if(exito){await PopMessage.message('Hábito registrado!', context, error: false);}
+    if(exito){await PopMessage.message('Hábito modificado!', context, error: false);}
 
+    int count = 0;
     if(!mounted) return;
-    Navigator.pop(context);
+    Navigator.of(context).popUntil((_) => count++ >= 2);
   }
 
   @override
@@ -82,6 +77,16 @@ class _CrearHabitoScreenState extends State<CrearHabitoScreen> {
     final habitProvider = Provider.of<HabitProvider>(context);
     
     idAlumno = alumnoProvider.alumno!.uid;
+
+    final Habito habito = ModalRoute.of(context)!.settings.arguments as Habito;
+
+    if(!modificoHora && habito.hora == ''){
+      textoHora = 'Selecciona una hora';
+    } else if(!modificoHora){
+      textoHora = habito.hora!;
+    }
+
+    diasRepeticion = habito.diasRepeticion;
 
     return Scaffold(
       body: SafeArea(
@@ -100,7 +105,7 @@ class _CrearHabitoScreenState extends State<CrearHabitoScreen> {
                 ),
                   
                 Center(
-                  child: Text('Registro de \nhábito', 
+                  child: Text('Modificación de \nhábito', 
                     style: GoogleFonts.inter(fontSize: 35, fontWeight: FontWeight.bold),
                     overflow: TextOverflow.clip,
                     textAlign: TextAlign.center,
@@ -119,7 +124,7 @@ class _CrearHabitoScreenState extends State<CrearHabitoScreen> {
                 ),
                 
                 CustomInputTextField(
-                  hintText: 'Título del hábito',
+                  hintText: habito.titulo,
                   formProperty: 'titulo',
                   formValues: formValues,
                   controller: _tituloController,
@@ -138,7 +143,7 @@ class _CrearHabitoScreenState extends State<CrearHabitoScreen> {
                 ),
                 
                 CustomInputTextField(
-                  hintText: 'Descripción del hábito',
+                  hintText: habito.descripcion,
                   formProperty: 'descripcion',
                   formValues: formValues,
                   minLines: 5,
@@ -165,6 +170,7 @@ class _CrearHabitoScreenState extends State<CrearHabitoScreen> {
                         
                         // Cuando lo toca en automatico pone la hora actual
                         setState(() {
+                          modificoHora = true;
                           textoHora = '${initTime.hour}:${initTime.minute}';
                           formValues['hora'] = textoHora;
                         });
@@ -176,6 +182,7 @@ class _CrearHabitoScreenState extends State<CrearHabitoScreen> {
                         
                         if(newTime != null){
                           setState(() {
+                            modificoHora = true;
                             textoHora = '${newTime.hour}:${newTime.minute}';
                             formValues['hora'] = textoHora;
                           });
@@ -198,6 +205,7 @@ class _CrearHabitoScreenState extends State<CrearHabitoScreen> {
 
                       // Cuando lo toca en automatico pone la hora actual
                       setState(() {
+                        modificoHora = true;
                         textoHora = '${initTime.hour}:${initTime.minute}';
                         formValues['hora'] = textoHora;
                       });
@@ -210,6 +218,7 @@ class _CrearHabitoScreenState extends State<CrearHabitoScreen> {
                           use24hFormat: true,
                           onDateTimeChanged: (DateTime newTime) {
                             setState(() {
+                              modificoHora = true;
                               textoHora = '${newTime.hour}:${newTime.minute}';
                               formValues['hora'] = textoHora;
                             });
@@ -268,7 +277,7 @@ class _CrearHabitoScreenState extends State<CrearHabitoScreen> {
                           return;
                         }
                           print(formValues);
-                          await crearHabito(habitProvider);
+                          await modificarHabito(habitProvider, habito);
                         
                       } else{
                         if(!mounted) return;

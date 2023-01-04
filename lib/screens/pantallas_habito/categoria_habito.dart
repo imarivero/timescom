@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:timescom/models/actividad.dart';
-import 'package:timescom/models/categoria.dart';
+import 'package:timescom/models/habito.dart';
 import 'package:timescom/providers/providers.dart';
 import 'package:timescom/theme/app_theme.dart';
 import 'package:timescom/widgets/widgets.dart';
 
-class CategoriaActividad extends StatefulWidget{
+class CategoriaHabito extends StatefulWidget{
   
-  const CategoriaActividad({Key? key}) : super(key: key);
+  const CategoriaHabito({Key? key}) : super(key: key);
 
   @override
-  State<CategoriaActividad> createState() => _CategoriaActividadState();
+  State<CategoriaHabito> createState() => _CategoriaHabitoState();
 }
 
-class _CategoriaActividadState extends State<CategoriaActividad> with TickerProviderStateMixin{
+class _CategoriaHabitoState extends State<CategoriaHabito> with TickerProviderStateMixin{
 
-  List<Actividad> listaActividadGeneral = [];
+  List<Habito> listaHabitos = [];
 
   late final AnimationController animationController = AnimationController(
     vsync: this,
@@ -30,42 +28,10 @@ class _CategoriaActividadState extends State<CategoriaActividad> with TickerProv
   @override
   Widget build(BuildContext context) {
 
-    TaskProvider taskProvider = Provider.of<TaskProvider>(context);
+    HabitProvider habitProvider = Provider.of<HabitProvider>(context);
 
-    final Categoria categoria = ModalRoute.of(context)!.settings.arguments as Categoria;
-    IconData icon = Icons.abc;
+    IconData icon = Icons.recycling;
     Color color = Colors.red;
-
-    switch (categoria.titulo) {
-      case 'todas':
-        listaActividadGeneral = taskProvider.listActividades;
-        icon = FontAwesomeIcons.exclamation;
-        color = Colors.lightBlue;
-        break;
-      case 'urgente+importante':
-        listaActividadGeneral = taskProvider.listActividadesUrgIm;
-        icon = FontAwesomeIcons.exclamation;
-        color = Colors.red;
-        break;
-      case 'urgente+noimportante':
-        listaActividadGeneral = taskProvider.listActividadesUrgNim;
-        icon = FontAwesomeIcons.bolt;
-        color = Colors.yellow.shade900;
-        break;
-      case 'nourgente+importante':
-        listaActividadGeneral = taskProvider.listActividadesNurgIm;
-        icon = FontAwesomeIcons.bath;
-        color = Colors.purple;
-        break;
-      case 'nourgente+noimportante':
-        listaActividadGeneral = taskProvider.listActividadesNurgNim;
-        icon = FontAwesomeIcons.basketball;
-        color = Colors.green.shade700;
-        break;
-      default:
-        print('error seleccion de tipo');
-        break;
-    }
 
 
     return  Scaffold(
@@ -82,26 +48,26 @@ class _CategoriaActividadState extends State<CategoriaActividad> with TickerProv
             ),
 
             Center(
-              child: Text(categoria.descripcion, 
+              child: Text('Todos tus hábitos', 
                 style: GoogleFonts.inter(fontSize: 30, fontWeight: FontWeight.bold)
               )
             ),
 
             const SizedBox(height: 40,),
 
-            if(listaActividadGeneral.isNotEmpty)
+            if(habitProvider.listHabitos.isNotEmpty)
               ListView.builder(
-                itemCount: listaActividadGeneral.length,
+                itemCount: habitProvider.listHabitos.length,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return _ActividadHabitoCard(icon: icon, color: color, actividad: listaActividadGeneral[index]);
+                  return _ActividadHabitoCard(icon: icon, color: color, habito: habitProvider.listHabitos[index]);
                 },
               ),
             
-            if(listaActividadGeneral.isEmpty)
+            if(habitProvider.listHabitos.isEmpty)
               const Center(
-                child: Text('Aún no has agregado ninguna actividad aquí', textAlign: TextAlign.center,)
+                child: Text('Aún no has agregado ningún hábito', textAlign: TextAlign.center,)
               ),
 
            
@@ -119,13 +85,13 @@ class _ActividadHabitoCard extends StatelessWidget {
 
   final IconData icon;
   final Color color;
-  final Actividad actividad;
+  final Habito habito;
   
   const _ActividadHabitoCard({
     Key? key,
     required this.icon,
     required this.color,
-    required this.actividad,
+    required this.habito,
   }) : super(key: key);
 
   @override
@@ -135,7 +101,7 @@ class _ActividadHabitoCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 10),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, 'detalleActividad', arguments: actividad);
+          Navigator.pushNamed(context, 'detalleHabito', arguments: habito);
         },
         child: Container(
           height: 50,
@@ -162,7 +128,7 @@ class _ActividadHabitoCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    actividad.titulo,
+                    habito.titulo,
                     style: GoogleFonts.inter(fontSize: 16, ),
                     overflow: TextOverflow.ellipsis,
                   ),

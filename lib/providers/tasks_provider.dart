@@ -69,8 +69,9 @@ class TaskProvider with ChangeNotifier{
       removerActividadListaEspecifica(actividad);
 
       // Agrega de nuevo la actividad con las modificaciones
-      listActividades.add(getActividadActualizada(modActividad, actividad));
-      agregarActividadListaEspecifica(actividad);
+      Actividad updatedActividad = getActividadActualizada(modActividad, actividad);
+      listActividades.add(updatedActividad);
+      agregarActividadListaEspecifica(updatedActividad);
 
       notifyListeners();
 

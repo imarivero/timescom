@@ -20,10 +20,13 @@ class CardRow extends StatelessWidget {
               categoria: Categoria(titulo: 'todas', descripcion: 'Todas tus Actividades'),
             ),
           ),
-          _SingleCard(
-            titulo: 'Hábitos', 
-            descripcion: 'Todos tus hábitos', 
-            categoria: Categoria(titulo: 'habitos', descripcion: 'Todos tus hábitos')
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, 'categoriaHabito'),
+            child: _SingleCard(
+              titulo: 'Hábitos', 
+              descripcion: 'Todos tus hábitos', 
+              categoria: Categoria(titulo: 'habitos', descripcion: 'Todos tus hábitos')
+            ),
           )
         ],
       ),

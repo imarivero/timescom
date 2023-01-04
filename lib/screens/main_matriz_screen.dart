@@ -45,6 +45,7 @@ class _MainMatrizScreenState extends State<MainMatrizScreen> with TickerProvider
     if(authProvider.userAuth != null && alumnoProvider.alumno!.nombre == ''){
       alumnoProvider.getAlumnoInfo(authProvider.alumnoLogedPreviously()!);
       taskProvider.getActividades(authProvider.userAuth!.uid);
+      habitProvider.getHabitos(authProvider.userAuth!.uid);
     }
 
     return Scaffold(

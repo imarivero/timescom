@@ -51,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if(alumno != null){
       await alumnoProvider.getAlumnoInfo(alumno);
       await taskProvider.getActividades(alumno.uid);
+      await habitProvider.getHabitos(alumno.uid);
       
       if(!mounted) return;
       Navigator.pushNamedAndRemoveUntil(context, 'wrapper', (route) => false);

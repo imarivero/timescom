@@ -169,6 +169,7 @@ class _CrearActividadScreenState extends State<CrearActividadScreen> {
                         // Cuando lo toca en automatico pone la fecha de hoy
                         setState(() {
                           texto = '${date.day}-${date.month}-${date.year}';
+                          formValues['fecha_limite'] = texto;
                         });
 
                         DateTime? newDate = await showDatePicker(

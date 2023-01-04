@@ -12,6 +12,7 @@ class AppRoutes {
     // ScreenDef(route: 'welcomeScreen', name: 'Pantalla bienvenida', screen: screen)
     ScreenDef(route: 'bienvenidoScreen', name: 'Pantalla bienvenida', screen: const WelcomeScreen()),
     ScreenDef(route: 'categoriaActividad', name: 'Pantalla vista de categoria actividad', screen: const CategoriaActividad()),
+    ScreenDef(route: 'categoriaHabito', name: 'Pantalla vista de categoria habito', screen: const CategoriaHabito()),
     ScreenDef(route: 'crearActividad', name: 'Servicio de autenticacion', screen: const CrearActividadScreen()),
     ScreenDef(route: 'crearHabito', name: 'Servicio de autenticacion', screen: const CrearHabitoScreen()),
     ScreenDef(route: 'detalleActividad', name: 'Pantalla vista de actividad', screen: const DetalleActividadScreen()),
@@ -23,6 +24,7 @@ class AppRoutes {
     ScreenDef(route: 'modificarActividad', name: 'Pantalla vista de modificacion de actividad', screen: const ModificarActividadScreen()),
     ScreenDef(route: 'modificarDatosAlumno', name: 'Pantalla modificacion de datos de alumno', screen: const ModificarDatos()),
     ScreenDef(route: 'modificarPassword', name: 'Pantalla modificacion de contrasena', screen: const CambiarPassword()),
+    ScreenDef(route: 'modificarHabito', name: 'Pantalla modificacion de habito', screen: const ModificarHabitoScreen()),
     ScreenDef(route: 'pomodoroPage', name: 'Pantalla vista de pomodoro', screen: PomodoroPage()),
     ScreenDef(route: 'registroScreen', name: 'Pantalla registro de alumno', screen: const RegistroScreen()),
     ScreenDef(route: 'restaurarPasswordScreen', name: 'Pantalla restauracion de contrasena', screen: const RestaurarPasswordScreen()),

@@ -5,31 +5,35 @@ import 'package:timescom/models/habito.dart';
 class HabitProvider with ChangeNotifier{
 
   final _firestore = FirebaseFirestore.instance;
+
   List<Habito> listHabitos = [];
+  String idAlumno = '';
 
   HabitProvider(){
     print('Habit provider iniciado');
   }
 
-  Future<bool> addHabito(Map<String, dynamic> newHabito, String idAlumno) async{
+  Future<bool> addHabito(Map<String, dynamic> newHabito) async{
     try{
       await _firestore
-      .collection('alumno_habitos')
-      .doc(idAlumno)
-      .set({'modificacion': FieldValue.serverTimestamp()});
+        .collection('alumno_habitos')
+        .doc(idAlumno)
+        .set({'modificacion': FieldValue.serverTimestamp()});
       
-      await _firestore
-      .collection('alumno_habitos')
-      .doc(idAlumno)
-      .collection('actividades')
-      .add(newHabito).then((value) async{
-        _firestore
+      DocumentReference<Map<String, dynamic>> doc =  await _firestore
         .collection('alumno_habitos')
         .doc(idAlumno)
         .collection('habitos')
-        .doc(value.id)
-        .update({'id_habito': value.id});
-      });
+        .add(newHabito);
+
+      await _firestore
+        .collection('alumno_habitos')
+        .doc(idAlumno)
+        .collection('habitos')
+        .doc(doc.id)
+        .update({'id_habito': doc.id});
+
+      newHabito['id_habito'] = doc.id;
 
       listHabitos.add(Habito.habitoFromMap(newHabito));
       notifyListeners();
@@ -41,7 +45,7 @@ class HabitProvider with ChangeNotifier{
     }
   }
   
-  Future<bool> updateHabito(Map<String, dynamic> modHabito, String idAlumno, Habito oldHabito) async{
+  Future<bool> updateHabito(Map<String, dynamic> modHabito, Habito oldHabito) async{
     try{
       await _firestore
       .collection('alumno_habitos')
@@ -51,7 +55,10 @@ class HabitProvider with ChangeNotifier{
       .update(modHabito);
 
       listHabitos.remove(oldHabito); 
-      listHabitos.add(Habito.habitoFromMap(modHabito));
+
+      Habito newHabito = getHabitoActualizado(modHabito, oldHabito);
+
+      listHabitos.add(newHabito);
 
       notifyListeners();
 
@@ -62,12 +69,12 @@ class HabitProvider with ChangeNotifier{
     }
   }
   
-  Future<bool> eliminarHabito(String idAlumno, Habito habito) async{
+  Future<bool> eliminarHabito(Habito habito) async{
     try{
       await _firestore
-      .collection('alumno_actividad')
+      .collection('alumno_habitos')
       .doc(idAlumno)
-      .collection('actividades')
+      .collection('habitos')
       .doc(habito.idHabito)
       .delete();
 
@@ -83,44 +90,52 @@ class HabitProvider with ChangeNotifier{
   }
   
   Future<void> getHabitos(String idAlumno) async{
+
+    this.idAlumno = idAlumno;
+
     try{
       await _firestore
-      .collection('alumno_actividad')
+      .collection('alumno_habitos')
       .doc(idAlumno)
-      .collection('actividades')
+      .collection('habitos')
       .get().then((query){
         // Iterar los documentos de firestore
-        query.docs.forEach((element) {
-          // Iteracion de los elementos dentro del documento
-          // element.data().forEach((key, value) {
-          //   Actividad actividad = Actividad.init(titulo: '', prioridad: '');
-          //   switch (key) {
-          //     case 'titulo':
-          //       break;
-          //     case 'descripcion':
-          //       break;
-          //     case 'fecha_limite':
-          //       break;
-          //     case 'cuadrante':
-          //       break;
-          //     default:
-          //       break;
-          //   }
-          // });
-          // Habito newHabito = Habito.habitoFromMap(
-
-          //   element.data().map((key, value) => MapEntry(key, value.toString()))
-          // );
-          // listHabitos.add(newHabito);
-
+        for (var element in query.docs) {
           print(element.data());
-          listHabitos.add(Habito.habitoFromMap(element.data()));
-        });
+
+          Map<String, dynamic> mapaTemporal = element.data();
+          Map<String, bool> mapaDias = convertirDynToBool(mapaTemporal['dias_repeticion']);
+
+          mapaTemporal.remove('dias_repeticion'); // Quita el que tiene String, dynamic
+          mapaTemporal['dias_repeticion'] = mapaDias; // Agrega el que tiene el casteo
+
+          listHabitos.add(Habito.habitoFromMap(mapaTemporal));
+        }
       });
       notifyListeners();
 
     } on FirebaseException catch (e){
       print(e.message);
     }
+  }
+
+  set setIdAlumno (String idAlumno){
+    this.idAlumno = idAlumno;
+  }
+
+  Habito getHabitoActualizado(Map<String, dynamic> mapa, Habito oldHabito){
+
+    Map<String, dynamic> oldMap = oldHabito.mapFromHabito();
+
+    mapa.forEach((key, value) {
+      oldMap.update(key, (oldValue) => value);
+    });
+
+    return Habito.habitoFromMap(oldMap);
+  }
+
+  Map<String, bool> convertirDynToBool(Map<String, dynamic> mapa){
+
+    return mapa.map((key, value) => MapEntry(key, value as bool));
   }
 }
