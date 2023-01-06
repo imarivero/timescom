@@ -17,7 +17,7 @@ class RegexConst{
     }
     if(correo.isEmpty){
       return 'Ingresa tu correo institucional';
-    } else if(!emailPattern.hasMatch(correo)){
+    } else if(!emailPatternInstitucional.hasMatch(correo)){
       return 'Ingresa un correo institucional válido';
     }
     else{
@@ -29,7 +29,7 @@ class RegexConst{
     if(correo == null){
       return null;
     }
-    if(correo.isNotEmpty && !emailPattern.hasMatch(correo)){
+    if(correo.isNotEmpty && !emailPatternInstitucional.hasMatch(correo)){
       return 'Ingresa un correo institucional válido';
     }
     else{
