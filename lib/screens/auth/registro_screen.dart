@@ -38,7 +38,8 @@ class _RegistroScreenState extends State<RegistroScreen> {
     AuthProvider authProvider, 
     AlumnoProvider alumnoProvider, 
     TaskProvider taskProvider,
-    HabitProvider habitProvider) async{
+    HabitProvider habitProvider,
+    RegistrosProvider registrosProvider) async{
 
     // Verifica si las contrasenas ingresadas son iguales
     if(confirmacionPassword()){
@@ -69,7 +70,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
         await alumnoProvider.getAlumnoInfo(alumno);
         taskProvider.setIdAlumno = alumno.uid;
         habitProvider.setIdAlumno = alumno.uid;
-      
+        registrosProvider.setIdAlumno = alumno.uid;
 
         // Llama al wrapper
         if(!mounted) return;
@@ -102,6 +103,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
     final alumnoProvider = Provider.of<AlumnoProvider>(context);
     final taskProvider = Provider.of<TaskProvider>(context);
     final habitProvider = Provider.of<HabitProvider>(context);
+    final registrosProvider = Provider.of<RegistrosProvider>(context);
 
     // final _alumno = Alumno();
 
@@ -207,8 +209,13 @@ class _RegistroScreenState extends State<RegistroScreen> {
                         return;
                       }
 
-                      registrarAlumno(authProvider, alumnoProvider, taskProvider, habitProvider);
-                      
+                      registrarAlumno(
+                        authProvider,
+                        alumnoProvider,
+                        taskProvider,
+                        habitProvider,
+                        registrosProvider,
+                      );
     
                     },
                     child: const Text('Registrar', style: TextStyle(fontSize: 20),),

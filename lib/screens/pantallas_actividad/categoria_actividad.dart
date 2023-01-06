@@ -19,6 +19,9 @@ class CategoriaActividad extends StatefulWidget{
 class _CategoriaActividadState extends State<CategoriaActividad> with TickerProviderStateMixin{
 
   List<Actividad> listaActividadGeneral = [];
+  Map<int, bool> isCheckedMap = {};
+  Map<Actividad, int> actIndex = {};
+
 
   late final AnimationController animationController = AnimationController(
     vsync: this,
@@ -27,10 +30,34 @@ class _CategoriaActividadState extends State<CategoriaActividad> with TickerProv
   late final curvedAnimation = CurvedAnimation(curve: Curves.easeInOut, parent: animationController);
   late final Animation<double> animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
 
+  Future<void> completarActividad(
+    Actividad actividad, 
+    TaskProvider taskProvider, 
+    RegistrosProvider registrosProvider) async {
+
+    await Future.delayed(const Duration(milliseconds: 1200));
+    // taskProvider.removerActividadListaEspecifica(actividad);
+    // taskProvider.listActividades.remove(actividad); // cambiar mas tarde
+    taskProvider.eliminarActividad(actividad);
+    listaActividadGeneral.remove(actividad);
+
+    // Asegura que las actividades que sigan sin completar despues
+    // de redibujar por ultima vez se mantengan en false
+    for (int i = 0; i < listaActividadGeneral.length; i++) {
+      isCheckedMap[i] = false;
+      actIndex[listaActividadGeneral[i]] = i;
+    }
+
+    registrosProvider.actualizarRegistroCategoria('actividad');
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
 
     TaskProvider taskProvider = Provider.of<TaskProvider>(context);
+    RegistrosProvider registrosProvider = Provider.of<RegistrosProvider>(context);
 
     final Categoria categoria = ModalRoute.of(context)!.settings.arguments as Categoria;
     IconData icon = Icons.abc;
@@ -67,6 +94,14 @@ class _CategoriaActividadState extends State<CategoriaActividad> with TickerProv
         break;
     }
 
+    if(isCheckedMap.isEmpty){
+      for (int i = 0; i < listaActividadGeneral.length; i++) {
+        isCheckedMap[i] = false;
+        actIndex[listaActividadGeneral[i]] = i;
+      }
+    }
+
+    // print('reconstruyendo..');
 
     return  Scaffold(
       body: SafeArea(
@@ -95,7 +130,18 @@ class _CategoriaActividadState extends State<CategoriaActividad> with TickerProv
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return _ActividadHabitoCard(icon: icon, color: color, actividad: listaActividadGeneral[index]);
+                  return _ActividadHabitoCard(
+                    icon: icon, 
+                    color: color, 
+                    actividad: listaActividadGeneral[index],
+                    index: actIndex[listaActividadGeneral[index]]!, // index tiene que ser el original y no el de listbuilder
+                    isCheckedMap: isCheckedMap,
+                    onTap: (actividad) async {
+                      isCheckedMap[index] = true; // revisar
+                      setState(() => {}); // redibujar
+                      await completarActividad(actividad, taskProvider, registrosProvider);
+                    } ,
+                  );
                 },
               ),
             
@@ -115,27 +161,40 @@ class _CategoriaActividadState extends State<CategoriaActividad> with TickerProv
   }
 }
 
-class _ActividadHabitoCard extends StatelessWidget {
+class _ActividadHabitoCard extends StatefulWidget {
 
   final IconData icon;
   final Color color;
   final Actividad actividad;
+  final Function(Actividad actividad) onTap;
+  final int index;
+  final Map<int, bool> isCheckedMap;
   
   const _ActividadHabitoCard({
     Key? key,
     required this.icon,
     required this.color,
-    required this.actividad,
+    required this.actividad, 
+    required this.onTap, 
+    required this.index, 
+    required this.isCheckedMap, 
   }) : super(key: key);
 
   @override
+  State<_ActividadHabitoCard> createState() => _ActividadHabitoCardState();
+}
+
+class _ActividadHabitoCardState extends State<_ActividadHabitoCard> {
+
+  @override
   Widget build(BuildContext context) {
-    
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 10),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, 'detalleActividad', arguments: actividad);
+
+          Navigator.pushNamed(context, 'detalleActividad', arguments: widget.actividad);
         },
         child: Container(
           height: 50,
@@ -152,17 +211,17 @@ class _ActividadHabitoCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
                 decoration: BoxDecoration(
-                  color: color,
+                  color: widget.color,
                   borderRadius: BorderRadius.circular(10)
                 ),
-                child: Icon(icon),
+                child: Icon(widget.icon),
               ),
       
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    actividad.titulo,
+                    widget.actividad.titulo,
                     style: GoogleFonts.inter(fontSize: 16, ),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -172,8 +231,14 @@ class _ActividadHabitoCard extends StatelessWidget {
               Checkbox(
                 fillColor: MaterialStateProperty.all<Color>(AppTheme.primary),
                 shape: const CircleBorder(),
-                value: false, 
-                onChanged: (value){
+                value: widget.isCheckedMap[widget.index], 
+                // value: isCheckedList[widget.index], 
+                onChanged: (value) async{
+
+                  widget.isCheckedMap[widget.index] = value ?? false;
+
+                  // Callback a la funcion del widget padre
+                  widget.onTap(widget.actividad);
                 }
               )
             ],

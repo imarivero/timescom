@@ -151,10 +151,23 @@ class TaskProvider with ChangeNotifier{
   }
   
   void removerActividadListaEspecifica(Actividad actividad){
-    if(actividad.prioridad == 'Urgente + importante'){listActividadesUrgIm.remove(actividad); return;}
-    if(actividad.prioridad == 'Urgente + no importante'){listActividadesUrgNim.remove(actividad); return;}
-    if(actividad.prioridad == 'No urgente + importante'){listActividadesNurgIm.remove(actividad); return;}
-    if(actividad.prioridad == 'No urgente + no importante'){listActividadesNurgNim.remove(actividad); return;}
+    switch (actividad.prioridad) {
+      case 'Urgente + importante':
+        listActividadesUrgIm.remove(actividad);
+        break;
+      case 'Urgente + no importante':
+        listActividadesUrgNim.remove(actividad);
+        break;
+      case 'No urgente + importante':
+        listActividadesNurgIm.remove(actividad);
+        break;
+      case 'No urgente + no importante':
+        listActividadesNurgNim.remove(actividad);
+        break;
+      default:
+      break;
+    }
+    notifyListeners();
   }
 
   Actividad getActividadActualizada(Map<String, String> mapa, Actividad oldActividad){
@@ -166,5 +179,14 @@ class TaskProvider with ChangeNotifier{
     });
 
     return Actividad.actividadFromMap(oldMap);
+  }
+
+  void clean(){
+    listActividades.clear();
+    listActividadesUrgIm.clear(); // lista urgentes + importantes
+    listActividadesUrgNim.clear(); // lista urgentes + no importantes
+    listActividadesNurgIm.clear(); // lista no urgentes + importantes
+    listActividadesNurgNim.clear(); // lista no urgentes + no importantes
+    idAlumno = '';
   }
 }

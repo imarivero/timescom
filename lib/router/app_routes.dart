@@ -16,7 +16,7 @@ class AppRoutes {
     ScreenDef(route: 'crearActividad', name: 'Servicio de autenticacion', screen: const CrearActividadScreen()),
     ScreenDef(route: 'crearHabito', name: 'Servicio de autenticacion', screen: const CrearHabitoScreen()),
     ScreenDef(route: 'detalleActividad', name: 'Pantalla vista de actividad', screen: const DetalleActividadScreen()),
-    ScreenDef(route: 'detalleCategoria', name: 'Pantalla vista de categoria', screen: const DetalleCategoriaScreen()),
+    ScreenDef(route: 'desempenioScreen', name: 'Pantalla vista de desempeno', screen: const DesempenioScreen()),
     ScreenDef(route: 'detalleHabito', name: 'Pantalla vista de habito', screen: const DetalleHabito()),
     ScreenDef(route: 'infoPerfil', name: 'Pantalla informacion de alumno', screen: const InfoPerfil()),
     ScreenDef(route: 'loginScreen', name: 'Pantalla de inicio de sesion', screen: const LoginScreen()),

@@ -138,4 +138,9 @@ class HabitProvider with ChangeNotifier{
 
     return mapa.map((key, value) => MapEntry(key, value as bool));
   }
+
+  void clean(){
+    listHabitos.clear();
+    String idAlumno = '';
+  }
 }

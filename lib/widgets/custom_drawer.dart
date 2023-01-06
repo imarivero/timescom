@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:timescom/providers/alumno_provider.dart';
-import 'package:timescom/providers/auth_provider.dart';
+import 'package:timescom/providers/providers.dart';
 import 'package:timescom/theme/app_theme.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -44,7 +43,7 @@ class _HeaderPicInfo extends StatelessWidget {
         children: [
           const CircleAvatar(
             radius: 50,
-            backgroundImage: NetworkImage('https://images.unsplash.com/flagged/photo-1566127992631-137a642a90f4'),
+            backgroundImage: NetworkImage('https://static.yoopies.com/bundles/yoopiescore/img/profile-v4/user_d_photo.png'),
           ),
 
           const SizedBox(height: 12,),
@@ -73,7 +72,13 @@ class _DrawerMenuItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+
+    // TODO: Cuando cierre la sesion eliminar contenido de las listas
     final authProvider = Provider.of<AuthProvider>(context);
+    final alumnoProvider = Provider.of<AlumnoProvider>(context);
+    final taskProvider = Provider.of<TaskProvider>(context);
+    final habitProvider = Provider.of<HabitProvider>(context);
+    final registrosProvider = Provider.of<RegistrosProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -93,7 +98,7 @@ class _DrawerMenuItems extends StatelessWidget {
             leading: const Icon(Icons.bar_chart),
             title: Text('Desempeño',
               style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold,)),
-            onTap: () {},
+            onTap: () => Navigator.pushNamed(context, 'desempenioScreen'),
           ),
 
           ListTile(
@@ -110,6 +115,9 @@ class _DrawerMenuItems extends StatelessWidget {
             onTap: () {
               // FirebaseAuth.instance.signOut();
               authProvider.signOut();
+              taskProvider.clean();
+              habitProvider.clean();
+              registrosProvider.clean();
               Navigator.pushNamedAndRemoveUntil(context, 'wrapper', (route) => false);
             },
           ),

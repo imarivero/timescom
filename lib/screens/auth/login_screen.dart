@@ -4,10 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:timescom/helpers/regex_const.dart';
 import 'package:timescom/models/alumno.dart';
-import 'package:timescom/providers/alumno_provider.dart';
-import 'package:timescom/providers/auth_provider.dart';
-import 'package:timescom/providers/habit_provider.dart';
-import 'package:timescom/providers/tasks_provider.dart';
+import 'package:timescom/providers/providers.dart';
 import 'package:timescom/widgets/custom_input_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -31,7 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
     AuthProvider authProvider, 
     AlumnoProvider alumnoProvider,
     TaskProvider taskProvider,
-    HabitProvider habitProvider) async{
+    HabitProvider habitProvider,
+    RegistrosProvider registrosProvider) async{
     // Carga mientras se resuelve el Future
     // showDialog(
     //   context: context,
@@ -52,6 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await alumnoProvider.getAlumnoInfo(alumno);
       await taskProvider.getActividades(alumno.uid);
       await habitProvider.getHabitos(alumno.uid);
+      await registrosProvider.getRegistros(alumno.uid);
       
       if(!mounted) return;
       Navigator.pushNamedAndRemoveUntil(context, 'wrapper', (route) => false);
@@ -66,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final alumnoProvider = Provider.of<AlumnoProvider>(context);
     final taskProvider = Provider.of<TaskProvider>(context);
     final habitProvider = Provider.of<HabitProvider>(context);
+    final registrosProvider = Provider.of<RegistrosProvider>(context);
 
     final Map<String, String> formValues = {
       'nombre': 'Omar Imanol',
@@ -142,7 +142,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           // print('form invalido');
                           return;
                         }
-                        iniciarSesion(authProvider, alumnoProvider, taskProvider, habitProvider);
+                        iniciarSesion(
+                          authProvider,
+                          alumnoProvider,
+                          taskProvider,
+                          habitProvider,
+                          registrosProvider,
+                        );
                       },
                       child: const Text('Entrar', style: TextStyle(fontSize: 20),),
                     ),

@@ -1,5 +1,6 @@
 // Archivo barrel de exportacion de archivos en /screen
 
+export 'package:timescom/screens/desempenio_screen.dart';
 export 'package:timescom/screens/auth/cambiar_password.dart';
 export 'package:timescom/screens/auth/info_perfil.dart';
 export 'package:timescom/screens/auth/login_screen.dart';
@@ -7,7 +8,6 @@ export 'package:timescom/screens/auth/modificar_datos.dart';
 export 'package:timescom/screens/auth/registro_screen.dart';
 export 'package:timescom/screens/auth/restaurar_password.dart';
 export 'package:timescom/screens/bienvenido.dart';
-export 'package:timescom/screens/detalle_categoria.dart';
 export 'package:timescom/screens/main_matriz_screen.dart';
 export 'package:timescom/screens/pantallas_actividad/categoria_actividad.dart';
 export 'package:timescom/screens/pantallas_actividad/crear_actividad.dart';
