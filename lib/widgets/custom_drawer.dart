@@ -105,7 +105,7 @@ class _DrawerMenuItems extends StatelessWidget {
             leading: const Icon(Icons.lightbulb),
             title: Text('Sugerencias',
               style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.bold,)),
-            onTap: () {},
+            onTap: () => Navigator.pushNamed(context, 'sugerencias'),
           ),
           
           ListTile(
