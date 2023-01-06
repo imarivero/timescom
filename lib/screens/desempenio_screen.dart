@@ -35,7 +35,8 @@ class DesempenioScreen extends StatelessWidget {
               
               if(registrosProvider.registroSemanaActual == null && registrosProvider.registroSemanaPasada == null)
                 Center(
-                  child: Text('Parece que aun no has generado ningun registro', 
+                  child: Text('Parece que aún no has generado ningún registro.',
+                    textAlign: TextAlign.center, 
                     style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold)
                   )
                 ),

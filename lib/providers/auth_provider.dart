@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:timescom/models/alumno.dart';
+import 'package:timescom/widgets/widgets.dart';
 
 enum AuthStatus{
   uninitialized,
@@ -152,7 +153,8 @@ class AuthProvider with ChangeNotifier{
   Future eliminarCuenta(BuildContext context) async{
     try{
       await _firebaseAuth.currentUser!.delete();
-      errorMessage('Tu cuenta ha sido eliminada exitosamente!', context, error: false);
+      // errorMessage('Tu cuenta ha sido eliminada exitosamente!', context, error: false);
+      await PopMessage.message('Tu cuenta ha sido eliminada exitosamente!', context, error: false);
       await signOut();
     } on auth.FirebaseAuthException catch(e){
       print(e.message);

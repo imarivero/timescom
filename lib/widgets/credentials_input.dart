@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:timescom/helpers/regex_const.dart';
-import 'package:timescom/providers/alumno_provider.dart';
-import 'package:timescom/providers/auth_provider.dart';
+import 'package:timescom/providers/providers.dart';
 import 'package:timescom/widgets/widgets.dart';
 
 class CredentialsInput{
@@ -27,10 +26,15 @@ class CredentialsInput{
   static Future<void> showInputDialog(BuildContext context, String sigPantalla) async{
 
     final Map<String, String> formMap = {};
+    bool validacion = false;
+
     final _passwordController = TextEditingController();
+
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final alumnoProvider = Provider.of<AlumnoProvider>(context, listen: false);
-    bool validacion = false;
+    final taskProvider = Provider.of<TaskProvider>(context, listen: false);
+    final habitProvider = Provider.of<HabitProvider>(context, listen: false);
+    final registrosProvider = Provider.of<RegistrosProvider>(context, listen: false);
     
     return showDialog(
       context: context,
@@ -74,9 +78,17 @@ class CredentialsInput{
                   await Future.delayed(const Duration(seconds: 1));
 
                   // TODO: Corregir llamadas al contexto
-                  await eliminarCuenta(alumnoProvider, authProvider, context);
-                  await Future.delayed(const Duration(seconds: 2));
-                  await authProvider.errorMessage('Cuenta eliminada con exito', context);
+                  // await eliminarCuenta(alumnoProvider, authProvider, context);
+
+                  // Debido a las reglas de seguridad especificadas en firestore, deben eliminarse
+                  // primero los registros y al final cerrar y borrar al usuario de auth service
+                  await taskProvider.borrarTodo();
+                  await habitProvider.borrarTodo();
+                  await registrosProvider.borrarTodo();
+
+                  await alumnoProvider.eliminarDatosAlumno(alumnoProvider.alumno!);
+                  await authProvider.eliminarCuenta(context);
+
                   Navigator.pushNamedAndRemoveUntil(context, 'wrapper', (route) => false);
                   
                 }else if(validacion){

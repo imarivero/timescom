@@ -119,9 +119,37 @@ class HabitProvider with ChangeNotifier{
     }
   }
 
+  /// Elimina todos los habitos almacenados en firestore, debería llamarse 
+  /// únicamente cuando se elimina la cuenta definitivamente.
+  Future<void> borrarTodo() async{
+    try{
+      // Trae todos los documentos para tener las referencias
+      QuerySnapshot<Map<String, dynamic>> coleccion = await _firestore
+      .collection('alumno_habitos')
+      .doc(idAlumno)
+      .collection('habitos')
+      .get();
+
+      // Elimina documento por documento
+      for(var doc in coleccion.docs){
+        doc.reference.delete();
+      }
+
+      // Elimina el documento padre que contiene el id del alumno
+      _firestore
+      .collection('alumno_habitos')
+      .doc(idAlumno)
+      .delete();
+
+    } on FirebaseException catch (e){
+      print(e.message);
+    }
+  }
+
   set setIdAlumno (String idAlumno){
     this.idAlumno = idAlumno;
   }
+
 
   Habito getHabitoActualizado(Map<String, dynamic> mapa, Habito oldHabito){
 

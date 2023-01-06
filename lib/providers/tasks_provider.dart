@@ -130,6 +130,30 @@ class TaskProvider with ChangeNotifier{
     notifyListeners();
   }
 
+   /// Elimina todas las actividades almacenadas en firestore, 
+  /// deberia llamarse unicamente cuando se elimina la cuenta definitivamente.
+  Future<void> borrarTodo() async{
+
+    // Trae todos los documentos para tener las referencias
+    QuerySnapshot<Map<String, dynamic>> coleccion = await _firestore
+    .collection('alumno_actividad')
+    .doc(idAlumno)
+    .collection('actividades')
+    .get();
+
+    // Elimina documento por documento
+    for(var doc in coleccion.docs){
+      doc.reference.delete();
+    }
+    
+    // Elimina el documento padre que contiene el id del alumno
+    _firestore
+    .collection('alumno_actividad')
+    .doc(idAlumno)
+    .delete();
+
+  }
+
   set setIdAlumno (String idAlumno){
     this.idAlumno = idAlumno;
   }
