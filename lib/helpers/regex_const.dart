@@ -1,10 +1,10 @@
 class RegexConst{
 
   static final namePattern = RegExp(
-    r"^[A-Za-z]+([\.,]|[-']|\s)*[A-Za-z]+\.?$",
+    r"^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(([',. -][a-zA-ZáéíóúÁÉÍÓÚñÑ])?[a-zA-ZáéíóúÁÉÍÓÚñÑ]*)*?$",
     caseSensitive: false, 
-    unicode: true, 
-    dotAll: true
+    // unicode: false, 
+    // dotAll: true
   );
 
   static final emailPattern = RegExp(r'^\S+@\S+\.\S+$');
