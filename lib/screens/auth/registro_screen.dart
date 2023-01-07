@@ -109,123 +109,125 @@ class _RegistroScreenState extends State<RegistroScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Form(
-            key: myFormKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-
-                Center(
-                  child: Text('Registro', 
-                   style: GoogleFonts.inter(
-                    fontSize: 38,
-                    fontWeight: FontWeight.bold,)
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: Form(
+              key: myFormKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+        
+                  Center(
+                    child: Text('Registro', 
+                     style: GoogleFonts.inter(
+                      fontSize: 38,
+                      fontWeight: FontWeight.bold,)
+                    ),
                   ),
-                ),
-
-                const SizedBox(height: 30,),
-
-                CustomInputTextField(
-                  hintText: 'Nombre(s)',
-                  formProperty: 'nombre',
-                  formValues: formValues,
-                  textCapitalization: TextCapitalization.words,
-                  controller: _nombreController,
-                  validator: (value) => RegexConst.validarNombre(value),
-                ),
-      
-                const SizedBox(height: 15,),
-                
-                CustomInputTextField(
-                  hintText: 'Apellido Paterno',
-                  formProperty: 'apellido_paterno',
-                  formValues: formValues,
-                  textCapitalization: TextCapitalization.words,
-                  controller: _apePaternoController,
-                  validator: (value) => RegexConst.validarApellidoPat(value),
-                ),
-                
-                const SizedBox(height: 15,),
-      
-                CustomInputTextField(
-                  hintText: 'Apellido Materno (opcional)',
-                  formProperty: 'apellido_materno',
-                  formValues: formValues,
-                  textCapitalization: TextCapitalization.words,
-                  controller: _apeMaternoController,
-                  validator: (value) => RegexConst.validarApellidoMat(value),
-                ),
-                
-                const SizedBox(height: 15,),
-      
-                CustomInputTextField(
-                  hintText: 'Correo electrónico',
-                  keyboardType: TextInputType.emailAddress,
-                  formProperty: 'correo',
-                  formValues: formValues,
-                  controller: _emailController,
-                  validator: (value) => RegexConst.validarCorreo(value),
-                ),
-      
-                const SizedBox(height: 15,),
-      
-                CustomInputTextField(
-                    hintText: 'Contraseña',
+        
+                  const SizedBox(height: 30,),
+        
+                  CustomInputTextField(
+                    hintText: 'Nombre(s)',
+                    formProperty: 'nombre',
+                    formValues: formValues,
+                    textCapitalization: TextCapitalization.words,
+                    controller: _nombreController,
+                    validator: (value) => RegexConst.validarNombre(value),
+                  ),
+              
+                  const SizedBox(height: 15,),
+                  
+                  CustomInputTextField(
+                    hintText: 'Apellido Paterno',
+                    formProperty: 'apellido_paterno',
+                    formValues: formValues,
+                    textCapitalization: TextCapitalization.words,
+                    controller: _apePaternoController,
+                    validator: (value) => RegexConst.validarApellidoPat(value),
+                  ),
+                  
+                  const SizedBox(height: 15,),
+              
+                  CustomInputTextField(
+                    hintText: 'Apellido Materno (opcional)',
+                    formProperty: 'apellido_materno',
+                    formValues: formValues,
+                    textCapitalization: TextCapitalization.words,
+                    controller: _apeMaternoController,
+                    validator: (value) => RegexConst.validarApellidoMat(value),
+                  ),
+                  
+                  const SizedBox(height: 15,),
+              
+                  CustomInputTextField(
+                    hintText: 'Correo electrónico',
+                    keyboardType: TextInputType.emailAddress,
+                    formProperty: 'correo',
+                    formValues: formValues,
+                    controller: _emailController,
+                    validator: (value) => RegexConst.validarCorreo(value),
+                  ),
+              
+                  const SizedBox(height: 15,),
+              
+                  CustomInputTextField(
+                      hintText: 'Contraseña',
+                      obscureText: true,
+                      formProperty: 'password',
+                      formValues: formValues,
+                      maxLines: 1,
+                      controller: _passwordController,
+                      validator: (value) => RegexConst.validarContrasena(value),
+                    ),
+              
+                  const SizedBox(height: 15,),
+            
+                  CustomInputTextField(
+                    hintText: 'Confirmación de Contraseña',
                     obscureText: true,
-                    formProperty: 'password',
+                    formProperty: 'password_check',
                     formValues: formValues,
                     maxLines: 1,
-                    controller: _passwordController,
+                    controller: _confirmPasswordController,
                     validator: (value) => RegexConst.validarContrasena(value),
                   ),
-      
-                const SizedBox(height: 15,),
-    
-                CustomInputTextField(
-                  hintText: 'Confirmación de Contraseña',
-                  obscureText: true,
-                  formProperty: 'password_check',
-                  formValues: formValues,
-                  maxLines: 1,
-                  controller: _confirmPasswordController,
-                  validator: (value) => RegexConst.validarContrasena(value),
-                ),
-    
-                const SizedBox(height: 40,),
-    
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                  child: ElevatedButton(
-                    
-                    onPressed: () async {
+            
+                  const SizedBox(height: 40,),
+            
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                    child: ElevatedButton(
                       
-                      // Al presionar guardar, se esconde el teclado
-                      FocusScope.of(context).requestFocus(FocusNode()); 
-
-                      if(!myFormKey.currentState!.validate()){
-                      //   print('Formulario no valido');
-                        return;
-                      }
-
-                      registrarAlumno(
-                        authProvider,
-                        alumnoProvider,
-                        taskProvider,
-                        habitProvider,
-                        registrosProvider,
-                      );
-    
-                    },
-                    child: const Text('Registrar', style: TextStyle(fontSize: 20),),
+                      onPressed: () async {
+                        
+                        // Al presionar guardar, se esconde el teclado
+                        FocusScope.of(context).requestFocus(FocusNode()); 
+        
+                        if(!myFormKey.currentState!.validate()){
+                        //   print('Formulario no valido');
+                          return;
+                        }
+        
+                        registrarAlumno(
+                          authProvider,
+                          alumnoProvider,
+                          taskProvider,
+                          habitProvider,
+                          registrosProvider,
+                        );
+            
+                      },
+                      child: const Text('Registrar', style: TextStyle(fontSize: 20),),
+                    ),
                   ),
-                ),
-
-                const SizedBox(height: 40),
-
-                const _CuentaExistente(),
-              ],
+        
+                  const SizedBox(height: 40),
+        
+                  const _CuentaExistente(),
+                ],
+              ),
             ),
           ),
         ),
