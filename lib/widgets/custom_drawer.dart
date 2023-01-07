@@ -72,8 +72,6 @@ class _DrawerMenuItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-
-    // TODO: Cuando cierre la sesion eliminar contenido de las listas
     final authProvider = Provider.of<AuthProvider>(context);
     final alumnoProvider = Provider.of<AlumnoProvider>(context);
     final taskProvider = Provider.of<TaskProvider>(context);
