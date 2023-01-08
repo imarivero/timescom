@@ -69,7 +69,7 @@ class TimerProvider extends ChangeNotifier {
 
     _tickSubscription?.cancel();
     isRunning = false;
-    wasWorking = false;
+    wasWorking = true;
     yaInicioUnPomodoro = false;
 
     durationFixed = const Duration(minutes: _minutosTrabajo);
