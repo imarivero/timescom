@@ -8,8 +8,8 @@ class TimerProvider extends ChangeNotifier {
 
   BuildContext? context;
 
-  static const int _minutosTrabajo = 2;
-  static const int _minutosDescanso = 1;
+  static const int _minutosTrabajo = 25;
+  static const int _minutosDescanso = 5;
 
   
   Duration duration = const Duration(minutes: _minutosTrabajo);
