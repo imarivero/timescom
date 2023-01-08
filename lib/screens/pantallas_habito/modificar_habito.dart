@@ -148,7 +148,7 @@ class _ModificarHabitoScreenState extends State<ModificarHabitoScreen> {
                   formValues: formValues,
                   minLines: 5,
                   controller: _descripcionController,
-                  // validator: (value) => RegexConst.validarNombre(value),
+                  validator: (value) => RegexConst.validarDescripcion(value),
                 ),
                   
                 const SizedBox(height: 15,),

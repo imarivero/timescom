@@ -8,8 +8,9 @@ class RegexConst{
   );
 
   static final emailPattern = RegExp(r'^\S+@\S+\.\S+$');
-
   static final emailPatternInstitucional = RegExp(r'^[a-z0-9]+@((alumno\.ipn\.)|(ipn\.))+(mx)+$');
+  static final sinEspaciosBlancos = RegExp(r'^\S+$');
+
 
   static String? validarCorreo(String? correo){
     if(correo == null){
@@ -94,17 +95,32 @@ class RegexConst{
   static String? validarTitulo(String? value){
     if(value == null || value.isEmpty){
       return 'Ingresa al menos un titulo';
+    } else if(!sinEspaciosBlancos.hasMatch(value)){
+      return 'Titulo no puede ser espacios en blanco';
+    }
+    else {
+      return null;
+    }
+  }
+
+  static String? validarTituloModificado(String? value){
+    if(value == null || value.isEmpty){
+      return null;
+    } else if(!sinEspaciosBlancos.hasMatch(value)){
+      return 'Titulo no puede ser solo espacios en blanco';
     }
     else {
       return null;
     }
   }
   
-  // static String? validarDescripcion(String? value){
-  //   if(value == null || value.isEmpty){
-  //     return null;
-  //   } if (value.isNotEmpty){
-  //     re
-  //   }
-  // }
+  static String? validarDescripcion(String? value){
+    if(value == null || value.isEmpty){
+      return null;
+    } if (value.isNotEmpty && !sinEspaciosBlancos.hasMatch(value)){
+      return 'Descripcion no puede ser solo de espacios en blanco.';
+    } else {
+      return null;
+    }
+  }
 }

@@ -36,8 +36,6 @@ class _CategoriaActividadState extends State<CategoriaActividad> with TickerProv
     RegistrosProvider registrosProvider) async {
 
     await Future.delayed(const Duration(milliseconds: 1200));
-    // taskProvider.removerActividadListaEspecifica(actividad);
-    // taskProvider.listActividades.remove(actividad); // cambiar mas tarde
     taskProvider.eliminarActividad(actividad);
     listaActividadGeneral.remove(actividad);
 

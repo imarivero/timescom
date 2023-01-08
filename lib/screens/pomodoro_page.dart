@@ -28,13 +28,8 @@ class _PomodoroPageState extends State<PomodoroPage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
-            TextButton(
-              onPressed: (){
-                Navigator.pop(context);
-              }, 
-              child: const Icon(Icons.arrow_back_ios_new),
-            ),
+
+            const SizedBox(height: 30.0),
 
             Center(
               child: Text('Temporizador \nPomodoro', 

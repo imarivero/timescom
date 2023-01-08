@@ -14,6 +14,10 @@ class DetalleActividadScreen extends StatelessWidget{
   Widget build(BuildContext context) {
 
     final Actividad actividad = ModalRoute.of(context)!.settings.arguments as Actividad;
+
+    TaskProvider taskProvider = Provider.of<TaskProvider>(context);
+    RegistrosProvider registrosProvider = Provider.of<RegistrosProvider>(context);
+
     
     return Scaffold(
       body: SafeArea(
@@ -38,9 +42,13 @@ class DetalleActividadScreen extends StatelessWidget{
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // Completo la actividad 
+          taskProvider.eliminarActividad(actividad);
+          registrosProvider.actualizarRegistroCategoria('actividad');
+          Navigator.pop(context);
         },
         backgroundColor: AppTheme.primary,
-        child: const Icon(Icons.edit_note),
+        child: const Icon(Icons.check),
       ),
       bottomNavigationBar: const CustomNavBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
@@ -96,7 +104,6 @@ class _ControlesState extends State<_Controles> {
                 if(confim){
                   await eliminarActividad(taskProvider, widget.actividad);
                 }
-
               },
               child: const Icon(Icons.delete_rounded, color: Colors.red,),
             ),
