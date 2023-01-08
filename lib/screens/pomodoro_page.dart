@@ -1,214 +1,128 @@
-import 'dart:async';
-//import 'dart:html';
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:timescom/providers/timer_provider.dart';
+
 import 'package:timescom/theme/app_theme.dart';
 import 'package:timescom/widgets/custom_navbar.dart';
-//import 'package:flutter/rendering.dart';
 
 class PomodoroPage extends StatefulWidget {
-  PomodoroPage({Key? key}) : super(key: key);
+  
+  const PomodoroPage({Key? key}) : super(key: key);
 
   @override
   State<PomodoroPage> createState() => _PomodoroPageState();
 }
 
 class _PomodoroPageState extends State<PomodoroPage> {
-  /*
-  double _progreso = 0;
-  static int _minutos = 25;
-  int _segundos = _minutos * 60;
-  static const maxSeconds = 25;
-  int seconds = maxSeconds;
-  Timer? tiempo;
-  int _start = 2;
-  int _startSegundos = 59;
-  */
-  int count_descansos = 0;
-  int count_pomodoro = 0;
-  int seconds = 00;
-  int minutes = 25;
-  Timer? timer;
-  int minutos_transcurridos = 00;
-  var f = NumberFormat("00");
-  double progreso = 0;
-  int minutesBreak = 05;
 
   @override
   Widget build(BuildContext context) {
+
+    final timerProvider = Provider.of<TimerProvider>(context);
+    timerProvider.setBuildContext = context;
+
     return SafeArea(
       child: Scaffold(
         body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 10.0),
-                child: Text(
-                  "",
-                  style: TextStyle(color: Colors.white, fontSize: 50.0),
-                ),
-              ),
-              Expanded(
-                  child: CircularPercentIndicator(
-                percent: progreso,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            const SizedBox(height: 30.0),
+
+            Center(
+              child: Text('Temporizador \nPomodoro', 
+                style: GoogleFonts.inter(fontSize: 30, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              )
+            ),
+
+            const SizedBox(height: 30.0),
+
+            Center(
+              child: CircularPercentIndicator(
+                percent: timerProvider.percentCompleted,
                 animation: true,
                 animateFromLastPercent: true,
                 radius: 140.0,
                 lineWidth: 20.0,
                 progressColor: AppTheme.primary,
-                center: Text("${f.format(minutes)} : ${f.format(seconds)}",
-                    style: TextStyle(color: Colors.white, fontSize: 60.0)),
-              )),
-              SizedBox(
-                height: 30.0,
+                center: Text(
+                  timerProvider.timeLeftString,
+                  style: const TextStyle(color: Colors.white, fontSize: 60.0)
+                ),
               ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    /*
-                    FloatingActionButton(
-                      onPressed: (() {
-                        print("Boton de pausa");
-                      }),
-                      child: Icon(
-                        Icons.pause,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Colors.grey,
-                    ), */
-                    FloatingActionButton(
-                      onPressed: (() {
-                        setState(() {
-                          _detenerPomodoro();
-                          print("Botón de stop");
-                        });
-                      }),
-                      child: Icon(
-                        Icons.stop,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Colors.grey,
-                      heroTag: 'btnStop',
-                    ),
-                    FloatingActionButton(
-                      onPressed: (() {
-                        _iniciarPomodoro();
-                        //minutes = minutesBreak;
-                        //print("Botón de play");
-                      }),
-                      child: Icon(
-                        Icons.play_arrow,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Colors.grey,
-                      heroTag: 'btnPlay',
-                    ),
-                  ],
-                ),
-              )
-              /*
-              Expanded(
-                  child: FloatingActionButton(
-                onPressed: () {
-                  print("Funcionalidad");
-                },
-                child: Icon(
-                  Icons.play_arrow,
-                  color: Colors.white,
-                ),
-                backgroundColor: Colors.grey,
-              )
-              ),*/
-            ]),
+            ),
+
+            const SizedBox(height: 20.0),
+
+            if(!timerProvider.yaInicioUnPomodoro)
+              Center(
+                child: Text(
+                  'Podemos comenzar cuando mejor te parezca.',
+                  style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                )
+              ),
+
+            if(timerProvider.yaInicioUnPomodoro)
+              Center(
+                child: Text(
+                  timerProvider.wasWorking ?
+                  'Es momento de trabajar 🖋️' :
+                  'Un descanso bien merecido 😴', 
+                  style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                )
+              ),
+
+            const _Controles()
+          ]
+        ),
         bottomNavigationBar: const CustomNavBar(),
       ),
-      
     );
   }
+}
 
-  void _detenerPomodoro() {
-    timer?.cancel();
-    seconds = 00;
-    minutes = 25;
-    progreso = 0;
-    minutos_transcurridos = 00;
-  }
+class _Controles extends StatelessWidget {
+  
+  const _Controles({
+    Key? key,
+  }) : super(key: key);
 
-  void _iniciarPomodoro() {
-    if (timer != null) {
-      _detenerPomodoro();
-    }
-    if (minutes > 0) {
-      seconds = minutes * 60;
-    }
-    if (seconds > 60) {
-      minutes = (seconds / 60).floor();
-      seconds -= (minutes * 60);
-    }
-    int time_auxi = minutes * 60;
-    double auxi_progreso = (time_auxi / 100);
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        if (seconds > 0) {
-          seconds--;
-        } else {
-          if (minutes > 0) {
-            seconds = 59;
-            minutes--;
-            minutos_transcurridos = 25 - minutes;
-            progreso = minutos_transcurridos / 25;
-          } else {
-            progreso = 0;
-            timer.cancel();
-            count_pomodoro++;
-            minutos_transcurridos = 0;
-            minutes = minutesBreak;
-            print("Comienzo del descanso");
-            print(minutes);
-            _descansoPomodoro();
-            print("Timer Complete");
-          }
-        }
-      });
-    });
-  }
+  @override
+  Widget build(BuildContext context) {
 
-  void _descansoPomodoro() {
-    if (timer != null) {
-      _detenerPomodoro();
-    }
-    if (minutesBreak > 0) {
-      seconds = minutesBreak * 60;
-    }
-    if (seconds > 60) {
-      minutesBreak = (seconds / 60).floor();
-      seconds -= (minutesBreak * 60);
-    }
-    int time_auxi = minutesBreak * 60;
-    double auxi_progreso = (time_auxi / 100);
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        if (seconds > 0) {
-          seconds--;
-        } else {
-          if (minutesBreak > 0) {
-            seconds = 59;
-            minutesBreak--;
-            minutos_transcurridos = 5 - minutesBreak;
-            progreso = minutos_transcurridos / 5;
-          } else {
-            progreso = 0;
-            timer.cancel();
-            count_descansos++;
-            minutes = 25;
-            print("Timer Complete");
-          }
-        }
-      });
-    });
+    final timerProvider = Provider.of<TimerProvider>(context);
+
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          ElevatedButton(
+            onPressed: (){
+              timerProvider.startStopTimer();
+            },
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(30, 30),
+            ),
+            child: timerProvider.isRunning ?
+             const Icon(Icons.pause, size: 40,) : 
+             const Icon(Icons.play_arrow, size: 40,),
+          ),
+          ElevatedButton(
+            onPressed: (){
+              timerProvider.reiniciarPomodoro();
+            },
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(30, 30),
+            ),
+            child: const Icon(Icons.stop, size: 40,),
+          ),
+        ],
+      ),
+    );
   }
 }

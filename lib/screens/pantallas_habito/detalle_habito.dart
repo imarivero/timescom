@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'package:timescom/models/habito.dart';
-import 'package:timescom/providers/habit_provider.dart';
+import 'package:timescom/providers/providers.dart';
 import 'package:timescom/theme/app_theme.dart';
 import 'package:timescom/widgets/widgets.dart';
 
@@ -16,6 +16,9 @@ class DetalleHabito extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final Habito habito = ModalRoute.of(context)!.settings.arguments as Habito;
+
+    HabitProvider habitProvider = Provider.of<HabitProvider>(context);
+    RegistrosProvider registrosProvider = Provider.of<RegistrosProvider>(context);
     
     return Scaffold(
       body: SafeArea(
@@ -40,9 +43,13 @@ class DetalleHabito extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // Completo el habito
+          habitProvider.listHabitos.remove(habito);
+          registrosProvider.actualizarRegistroCategoria('habito');
+          Navigator.pop(context);
         },
         backgroundColor: AppTheme.primary,
-        child: const Icon(Icons.edit_note),
+        child: const Icon(Icons.check),
       ),
       bottomNavigationBar: const CustomNavBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,

@@ -140,7 +140,7 @@ class _ModificarActividadScreenState extends State<ModificarActividadScreen> {
                   formProperty: 'titulo',
                   formValues: formValues,
                   controller: _tituloController,
-                  validator: (value) => RegexConst.validarTitulo(value),
+                  validator: (value) => RegexConst.validarTituloModificado(value),
                 ),
                   
                 const SizedBox(height: 15,),
@@ -160,7 +160,7 @@ class _ModificarActividadScreenState extends State<ModificarActividadScreen> {
                   formValues: formValues,
                   minLines: 5,
                   controller: _descripcionController,
-                  // validator: (value) => RegexConst.validarNombre(value),
+                  validator: (value) => RegexConst.validarDescripcion(value),
                 ),
                   
                 const SizedBox(height: 15,),
@@ -279,7 +279,7 @@ class _ModificarActividadScreenState extends State<ModificarActividadScreen> {
                       }).toList(),
                       onChanged: (value){
                         setState(() {
-                          if(value != null){prioridad = value as String; formValues['prioridad'] = value;}
+                          if(value != null){actividad.prioridad = value as String; formValues['prioridad'] = value;}
                         });
                       },
                       hint: Text(actividad.prioridad, style: GoogleFonts.inter(fontSize: 17, color: Colors.white),),

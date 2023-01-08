@@ -282,8 +282,6 @@ class RegistrosProvider with ChangeNotifier{
       mapaRegistro.remove('registro_pomodoros');
       mapaRegistro['registro_pomodoros'] = mapaStringInt;
     }
-
-    mapaStringInt.clear();
     
     return mapaRegistro;
   }

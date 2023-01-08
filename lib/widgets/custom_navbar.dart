@@ -6,12 +6,12 @@ class CustomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Verificar el funcionamiento del navbar para que las pantallas no se encimen
     return BottomNavigationBar(
+      currentIndex: 0,
       selectedItemColor: Colors.white,
       backgroundColor: Colors.black,
       unselectedLabelStyle: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
-      selectedLabelStyle: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+      selectedLabelStyle: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blue),
       landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
       items: const [
         BottomNavigationBarItem(
@@ -34,13 +34,13 @@ class CustomNavBar extends StatelessWidget {
         // print(value);
         switch (value) {
           case 0:
-            Navigator.pushNamed(context, 'mainMatrizScreen');
+            Navigator.pushNamedAndRemoveUntil(context, 'mainMatrizScreen', (route) => false);
             break;
           case 1:
             // Navigator.pushNamed(context, 'cre');
             break;
           case 2:
-            Navigator.pushNamed(context, 'pomodoroPage');
+            Navigator.pushNamedAndRemoveUntil(context, 'pomodoroPage', (route) => false);
             break;
           default:
             // print('error');
