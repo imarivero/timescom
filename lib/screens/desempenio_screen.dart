@@ -35,7 +35,7 @@ class DesempenioScreen extends StatelessWidget {
               
               if(registrosProvider.registroSemanaActual == null && registrosProvider.registroSemanaPasada == null)
                 Center(
-                  child: Text('Parece que aún no has generado ningún registro.',
+                  child: Text('Parece que aún no has generado ningún registro para la semana actual ni la anterior.',
                     textAlign: TextAlign.center, 
                     style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold)
                   )
@@ -45,10 +45,10 @@ class DesempenioScreen extends StatelessWidget {
                 const _ChartsWeek(tipo: 1,),
 
               if(registrosProvider.registroSemanaPasada != null)
-                const Divider(),
+                const Divider(color: Colors.grey, thickness: 2,),
               
               if(registrosProvider.registroSemanaPasada != null)
-                const _ChartsWeek(tipo: 2,),
+                const _ChartsWeek(tipo: 0,),
 
             ],
           ),
