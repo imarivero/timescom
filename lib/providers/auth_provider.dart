@@ -89,6 +89,7 @@ class AuthProvider with ChangeNotifier{
 
       _status = AuthStatus.authenticated;
       userAuth = _firebaseAuth.currentUser;
+
       notifyListeners();
 
       // return Alumno.initCredentials(userCredential.user!.uid, userCredential.user!.email!);

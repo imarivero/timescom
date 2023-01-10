@@ -47,10 +47,6 @@ class SugerenciasDescripcionScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.save),
-        onPressed: () {},
-      ),
     );
   }
 }
@@ -107,16 +103,7 @@ class _Sugerenciacontainer extends StatelessWidget {
               padding: const EdgeInsets.all(18.0),
               child: Text(
                 habitosugerencia.habitoSeleccionado.descripcion,
-                style: const TextStyle(color: Colors.black),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Text(
-                habitosugerencia.habitoSeleccionado.descripcion,
+                textAlign: TextAlign.justify,
                 style: const TextStyle(color: Colors.black),
               ),
             ),
