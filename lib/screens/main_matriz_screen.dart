@@ -51,24 +51,26 @@ class _MainMatrizScreenState extends State<MainMatrizScreen> with TickerProvider
       key: scaffoldKey,
       drawer: const Drawer(child: CustomDrawer(),),
       body: SafeArea(
-        child: Column(
-          children: [
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              
+              // Menu control y texto
+              _MenuDrawerText(scaffoldKey: scaffoldKey),
             
-            // Menu control y texto
-            _MenuDrawerText(scaffoldKey: scaffoldKey),
-          
-            // Saludo y nombre de alumno
-            const SizedBox(height: 20,),
-            Text('Hola, \n ${alumnoProvider.alumno!.nombre} ${alumnoProvider.alumno!.apellidoPaterno}',
-              textAlign: TextAlign.start,
-              style: GoogleFonts.inter(fontSize: 35, fontWeight: FontWeight.bold)),
-          
-            // Tarjetas actividades y habitos
-            const CardRow(),
-          
-            // Texto y matriz
-            const CardTable(),
-          ],
+              // Saludo y nombre de alumno
+              const SizedBox(height: 20,),
+              Text('Hola, \n ${alumnoProvider.alumno!.nombre} ${alumnoProvider.alumno!.apellidoPaterno}',
+                textAlign: TextAlign.start,
+                style: GoogleFonts.inter(fontSize: 35, fontWeight: FontWeight.bold)),
+            
+              // Tarjetas actividades y habitos
+              const CardRow(),
+            
+              // Texto y matriz
+              const CardTable(),
+            ],
+          ),
         ),
       ),
       floatingActionButton: CustomFloatingButtons(animation: _animation, animationController: _animationController,),

@@ -61,6 +61,10 @@ class _CategoriaHabitoState extends State<CategoriaHabito> with TickerProviderSt
         isCheckedMap[i] = false;
         habitIndex[habitProvider.listHabitos[i]] = i;
       }
+    } else{
+      for (int i = 0; i < habitProvider.listHabitos.length; i++) {
+        habitIndex[habitProvider.listHabitos[i]] = i;
+      }
     }
 
 

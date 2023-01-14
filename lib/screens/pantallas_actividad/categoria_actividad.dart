@@ -92,9 +92,16 @@ class _CategoriaActividadState extends State<CategoriaActividad> with TickerProv
         break;
     }
 
-    if(isCheckedMap.isEmpty){
+    if(isCheckedMap.isEmpty || actIndex.isEmpty){
       for (int i = 0; i < listaActividadGeneral.length; i++) {
         isCheckedMap[i] = false;
+        actIndex[listaActividadGeneral[i]] = i;
+      }
+    } else{
+      
+      actIndex.clear();
+
+      for (int i = 0; i < listaActividadGeneral.length; i++) {
         actIndex[listaActividadGeneral[i]] = i;
       }
     }
